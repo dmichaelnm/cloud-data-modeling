@@ -1,1 +1,76 @@
 // app global css in SCSS form
+
+body {
+  background-color: $light-background-input;
+  color: $light-text;
+  font-size: 9pt;
+}
+
+body.body--dark {
+  background-color: $dark-background-input;
+  color: $dark-text;
+}
+
+.q-menu {
+  border-radius: 4px;
+  box-shadow: 0 0;
+  background-color: $light-background;
+  border: 1px solid $light-frame;
+}
+
+.body--dark .q-menu {
+  background-color: $dark-background;
+  border: 1px solid $dark-frame;
+}
+
+// ======================================================================
+// QField
+// ======================================================================
+
+.q-field {
+  font-size: 9pt;
+}
+
+.q-field--dense .q-field__marginal {
+  height: 30px;
+}
+
+.q-field--auto-height.q-field--dense .q-field__control  {
+  height: 30px;
+  min-height: 30px;
+}
+
+.q-field--auto-height.q-field--dense .q-field__native{
+  min-height: 30px;
+  padding: 0 0;
+}
+
+.q-field--outlined .q-field__control {
+  background-color: $light-background-input;
+  border-radius: 4px;
+  padding: 0 6px;
+}
+
+.body--dark .q-field--outlined .q-field__control {
+  background-color: $dark-background-input;
+}
+
+.q-field--dark .q-field__control:before {
+  border-color: $light-frame;
+}
+
+.body--dark .q-field--dark .q-field__control:before {
+  border-color: $dark-frame;
+}
+
+.q-field--dense .q-field__label {
+  font-size: 8.5pt;
+}
+
+.q-field--dense .q-field__bottom {
+  font-size: 8pt;
+}
+
+.q-field__bottom {
+  padding: 4px 4px 0;
+}
