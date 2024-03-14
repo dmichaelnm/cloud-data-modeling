@@ -56,7 +56,7 @@ export default {
     },
     // The computed style attribute value
     styleAttr() {
-      return this.width ? "width: " + this.width + "px;" : "";
+      return this.width ? "width: " + this.width + "px; max-width: " + this.width + "px;" : "";
     }
   }
 }

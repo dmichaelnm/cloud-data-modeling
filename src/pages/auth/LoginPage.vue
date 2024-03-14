@@ -5,9 +5,9 @@
     <c-authentication-frame :message="$t('authentication.login.message')">
       <!-- Login Form -->
       <q-form @submit="onSubmit" greedy>
-        <div class="q-col-gutter-y-md">
+        <div class="q-col-gutter-y-sm">
           <!-- Form Row -->
-          <div class="row q-col-gutter-x-md">
+          <div class="row q-col-gutter-x-sm">
             <!-- Email Column -->
             <div class="col">
               <!-- Email Input Field -->
@@ -38,6 +38,19 @@
               <c-button :label="$t('button.login')" type="submit"/>
             </div>
           </div>
+          <!-- Link Row -->
+          <div class="row">
+            <!-- Register Account Column -->
+            <div class="col text-center">
+              <!-- Register Account Button -->
+              <c-button :label="$t('button.registerAccount')" look="link" to="register"/>
+            </div>
+            <!-- Reset Password Column -->
+            <div class="col text-center">
+              <!-- Reset Password Button -->
+              <c-button :label="$t('button.resetPassword')" look="link"/>
+            </div>
+          </div>
         </div>
       </q-form>
     </c-authentication-frame>
@@ -45,10 +58,10 @@
 </template>
 
 <script>
+import BasicMixin from "src/mixins/BasicMixin";
 import CAuthenticationFrame from "components/auth/CAuthenticationFrame.vue";
 import CButton from "components/common/CButton.vue";
 import CInput from "components/common/CInput.vue";
-import BasicMixin from "src/mixins/BasicMixin";
 
 export default {
   // This is the name of this page.
@@ -79,7 +92,7 @@ export default {
   // Called before this component is mounted.
   beforeMount() {
     // Register "language-changed" event.
-    this.$bus.on("language-changed", (language) => {
+    this.$bus.on("language-changed", () => {
       // Reset error states
       this.$refs.inputEmail.resetError();
       this.$refs.inputPassword.resetError();

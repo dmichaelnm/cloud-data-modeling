@@ -1,12 +1,12 @@
 import {FirestoreDocument} from "src/scripts/objects/FirestoreDocument";
-import {onAuthStateChanged} from "firebase/auth";
-import {firebaseAuth} from "src/scripts/firebase";
+import {firebaseAuth, firestore} from "src/scripts/firebase";
+import {onAuthStateChanged, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
+import {doc, setDoc} from "firebase/firestore";
 
 export class Account extends FirestoreDocument {
 
   static async onAccountStateChanged(handler) {
     // Catch changes in the firebase authentication state.
-    let user;
     onAuthStateChanged(firebaseAuth, (user) => {
       if (user === null) {
         // No authenticated user found.
@@ -16,5 +16,34 @@ export class Account extends FirestoreDocument {
         handler(null);
       }
     });
+  }
+
+  static async create(firstName, lastName, email, password, language, darkMode) {
+    // Create the firebase account
+    const credential = await createUserWithEmailAndPassword(firebaseAuth, email, password);
+    // Update the first name and last name.
+    await updateProfile(credential.user, {displayName: firstName + " " + lastName});
+    // Create firestore document reference for the new account
+    const docRef = doc(firestore, "account", credential.user.uid);
+    // Create the data structure
+    const data = {
+      profile: {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+      },
+      preferences: {
+        language: language,
+        darkMode: darkMode
+      }
+    };
+    // Create the firestore document
+    await setDoc(docRef, data);
+    // Create the account
+    return new Account(docRef.path, data);
+  }
+
+  constructor(path, data) {
+    super(path, data);
   }
 }

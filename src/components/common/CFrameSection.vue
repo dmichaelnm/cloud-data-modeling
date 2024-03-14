@@ -1,4 +1,6 @@
 <template>
+  <!-- Upper indicator -->
+  <q-linear-progress v-if="color" :color="color" :value="1"/>
   <!-- CFrameSection Component -->
   <div :class="classAttr" :style="styleAttr">
     <div class="col">
@@ -54,6 +56,10 @@ export default {
       type: Boolean,
       default: false
     },
+    // The color for the indicator
+    color: {
+      type: String
+    }
   },
 
   // Computed values fot his component.

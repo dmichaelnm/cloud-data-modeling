@@ -13,6 +13,8 @@
            :label="label"
            :type="type"
            :rules="[value => value?.trim().length > 0 || !mandatory || $t('error.input.empty') ]"
+           :error="errorMessage !== undefined && errorMessage !== null"
+           :error-message="errorMessage"
            @input="updateValue">
 
   </q-input>
@@ -43,6 +45,10 @@ export default {
     autoFocus: {
       type: Boolean,
       default: false
+    },
+    // An optional error message
+    errorMessage: {
+      type: String
     },
     // The label of this component.
     label: {

@@ -1,11 +1,14 @@
+<!--suppress JSValidateTypes -->
 <template>
   <!-- CButton Component -->
   <q-btn unelevated
+         :flat="flatAttr"
          no-caps
          spellcheck="false"
-         color="primary"
+         :color="colorAttr"
          :label="label"
          :size="size"
+         :to="to"
          :type="type">
 
   </q-btn>
@@ -28,14 +31,27 @@ export default {
 
   // The public attributes of this component.
   props: {
+    // The color of the button.
+    color: {
+      type: String
+    },
     // The label of the button.
     label: {
       type: String
+    },
+    // The look of the button.
+    look: {
+      type: String,
+      default: "button"
     },
     // The size of the button.
     size: {
       type: String,
       default: "sm"
+    },
+    // The target route of the page to redirect.
+    to: {
+      type: String
     },
     // The type of the button.
     type: {
@@ -48,6 +64,15 @@ export default {
   methods: {},
 
   // Computed values fot his component.
-  computed: {}
+  computed: {
+    // The flat attribute of the button.
+    flatAttr() {
+      return this.look === "link";
+    },
+    // The color attribute of the button.
+    colorAttr() {
+      return this.color ? this.color : this.look === "link" ? "secondary" : "primary";
+    }
+  }
 }
 </script>
