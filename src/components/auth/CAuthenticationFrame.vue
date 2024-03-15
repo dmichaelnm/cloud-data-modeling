@@ -1,4 +1,4 @@
-<!--suppress JSUnresolvedReference -->
+<!--suppress JSUnresolvedReference, JSCheckFunctionSignatures -->
 <template>
   <!-- Authentication Card -->
   <c-frame :width="500" shadow>
@@ -15,7 +15,9 @@
       </div>
       <!-- Version Information -->
       <div class="row">
-        <div class="col cdm-header-subtitle">{{ $t("application.version") }}</div>
+        <div class="col cdm-header-subtitle">
+          {{ $t("application.version", {major: version.major, minor: version.minor, build: version.build})}}
+        </div>
       </div>
     </c-frame-section>
 
@@ -96,6 +98,7 @@ import BasicMixin from "src/mixins/BasicMixin";
 import CFrame from "components/common/CFrame.vue";
 import CFrameSection from "components/common/CFrameSection.vue";
 import CSelect from "components/common/CSelect.vue";
+import {version} from "src/scripts/version";
 
 import {getLanguageOptions, getLanguageOption} from "src/scripts/options";
 
@@ -127,8 +130,11 @@ export default {
   // The variables of this component.
   data() {
     return {
+      // Language
       language: "en-US",
-      languageIcon: null
+      languageIcon: null,
+      // Version
+      version: version
     }
   },
 
