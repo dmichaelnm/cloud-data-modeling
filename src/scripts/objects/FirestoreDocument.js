@@ -1,6 +1,3 @@
-import {firestore} from "src/scripts/firebase";
-import {doc} from "firebase/firestore";
-
 export class FirestoreDocument {
 
   /**
