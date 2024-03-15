@@ -104,7 +104,7 @@ export default {
   // The methods of this component.
   methods: {
     onSubmit() {
-      console.debug("Submit");
+
     }
   }
 }

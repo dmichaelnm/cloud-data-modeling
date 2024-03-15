@@ -1,3 +1,6 @@
+import {firestore} from "src/scripts/firebase";
+import {doc} from "firebase/firestore";
+
 export class FirestoreDocument {
 
   /**
@@ -12,15 +15,7 @@ export class FirestoreDocument {
    */
   path
 
-  /**
-   * The data of the firestore document.
-   * @type any
-   */
-  data
-
-  constructor(path, data) {
-    // Store the data
-    this.data = data;
+  constructor(path) {
     // Extract ID and path
     const parts = path.split('/');
     this.id = parts.pop();
