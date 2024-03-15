@@ -72,7 +72,16 @@ export default {
         "Felder ein. Wenn Sie noch kein Konto haben, können Sie über den Link \"Konto registrieren\" ein neues erstellen. " +
         "Beachten Sie jedoch, dass Ihr neues Konto zunächst von einem Administrator aktiviert werden muss, bevor Sie " +
         "sich anmelden können. Wenn Sie Ihr Passwort vergessen haben, können Sie es zurücksetzen, indem Sie auf den " +
-        "Link \"Passwort zurücksetzen\" klicken."
+        "Link \"Passwort zurücksetzen\" klicken.",
+      // Error Messages
+      error: {
+        // Invalid Credentials
+        invalidCredentials: "Email-Adresse und/oder Kennwort ist nicht korrekt.",
+        // Too many failed attempts
+        tooManyFailedAttempts: "Temporäre Sperre wegen zu vieler fehlgeschlagener Anmeldeversuche.",
+        // Account is locked
+        accountLocked: "Das Konto ist nicht durch einen Administrator freigegeben."
+      }
     },
     // Register Labels
     register: {

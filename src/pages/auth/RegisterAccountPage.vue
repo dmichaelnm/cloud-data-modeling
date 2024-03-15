@@ -235,11 +235,11 @@ export default {
       this.emailError = null;
       this.passwordError = null;
       this.passwordRepeatError = null;
-      this.$refs.inputFistName.resetValidation();
-      this.$refs.inputLastName.resetValidation();
-      this.$refs.inputEmail.resetValidation();
-      this.$refs.inputPassword.resetValidation();
-      this.$refs.inputPasswordRepeat.resetValidation();
+      this.$refs.inputFistName?.resetError();
+      this.$refs.inputLastName?.resetError();
+      this.$refs.inputEmail?.resetError();
+      this.$refs.inputPassword?.resetError();
+      this.$refs.inputPasswordRepeat?.resetError();
     }
   }
 }

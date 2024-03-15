@@ -69,7 +69,16 @@ export default {
       message: "Welcome to the “Cloud Data Modeling” application. Please enter your login credentials in the fields " +
         "below. If you don't have an account yet, you can create a new one by clicking on the link " +
         "\"Register Account\". However, keep in mind that an administrator must first activate your new account before " +
-        "you can log in. If you forgot you password, you can reset it by clicking on the link \"Reset Password\"."
+        "you can log in. If you forgot you password, you can reset it by clicking on the link \"Reset Password\".",
+      // Error Messages
+      error: {
+        // Invalid Credentials
+        invalidCredentials: "Email address and/or password is incorrect.",
+        // Too many failed attempts
+        tooManyFailedAttempts: "Temporary lock due to too many failed login attempts.",
+        // Account is locked
+        accountLocked: "The account is not authorized by an administrator."
+      }
     },
     // Register Labels
     register: {

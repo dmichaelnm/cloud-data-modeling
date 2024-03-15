@@ -1,7 +1,13 @@
 import {FirestoreDocument} from "src/scripts/objects/FirestoreDocument";
 import {firebaseAuth, firestore} from "src/scripts/firebase";
-import {onAuthStateChanged, createUserWithEmailAndPassword, updateProfile} from "firebase/auth";
-import {doc, getDoc, setDoc} from "firebase/firestore";
+import {
+  onAuthStateChanged,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  updateProfile
+} from "firebase/auth";
+import {doc, getDoc, setDoc, Timestamp} from "firebase/firestore";
 
 /**
  * Represents an account in the system.
@@ -70,12 +76,50 @@ export class Account extends FirestoreDocument {
       },
       states: {
         locked: true
+      },
+      meta: {
+        createdAt: Timestamp.now(),
+        navigator: {
+          userAgent: navigator.userAgent,
+          language: navigator.language,
+          doNotTrack: navigator.doNotTrack
+        }
       }
     };
     // Create the firestore document
     await setDoc(docRef, data);
     // Create the account
     return new Account(docRef.path, data);
+  }
+
+  /**
+   * Logs in a user with the given email and password.
+   *
+   * @param {string} email - The email of the user.
+   * @param {string} password - The password of the user.
+   * @return {Promise<Account>} A promise that resolves to the user's account object.
+   * @throws {{code:string, message:string}} Throws an error object if an error occurs during the login process.
+   */
+  static async login(email, password) {
+    // Sign in
+    const credentials = await signInWithEmailAndPassword(firebaseAuth, email, password);
+    // Get the account object
+    const account = await Account.getAccount(credentials.user.uid);
+    if (account) {
+      // Check the locked state
+      if (!account.isLocked()) {
+        // Everything is okay.
+        return account;
+      } else {
+        // Logout firestore user
+        await signOut(firebaseAuth);
+        // Account is locked.
+        throw {code: "auth/account-is-locked", message: "The account is locked."};
+      }
+    } else {
+      // No account found for the user.
+      throw {code: "auth/account-not-found", message: "The firestore account object was not found."};
+    }
   }
 
   /**

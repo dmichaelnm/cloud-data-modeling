@@ -1,6 +1,15 @@
 <template>
   <!-- LoginPage Page -->
   <q-page class="flex flex-center">
+    <!-- Message Dialog -->
+    <message-dialog v-model="messageDialog.visible"
+                    :action="messageDialog.action"
+                    :title="messageDialog.title"
+                    :message="messageDialog.message"
+                    :details="messageDialog.details"
+                    :color="messageDialog.color"
+                    :data="messageDialog.data"/>
+
     <!-- Authentication Frame -->
     <c-authentication-frame :message="$t('authentication.login.message')">
       <!-- Login Form -->
@@ -14,6 +23,7 @@
               <c-input ref="inputEmail"
                        v-model="email"
                        :label="$t('common.emailAddress')"
+                       :error-message="emailError"
                        :auto-focus="!email || email.length === 0"
                        mandatory
                        auto-complete="username"/>
@@ -62,6 +72,8 @@ import BasicMixin from "src/mixins/BasicMixin";
 import CAuthenticationFrame from "components/auth/CAuthenticationFrame.vue";
 import CButton from "components/common/CButton.vue";
 import CInput from "components/common/CInput.vue";
+import {Account} from "src/scripts/objects/Account";
+import MessageDialog from "components/dialog/MessageDialog.vue";
 
 export default {
   // This is the name of this page.
@@ -74,6 +86,7 @@ export default {
 
   // The used components of this page.
   components: {
+    MessageDialog,
     CAuthenticationFrame,
     CButton,
     CInput
@@ -84,6 +97,7 @@ export default {
     return {
       // Email Address
       email: "",
+      emailError: null,
       // Password
       password: ""
     }
@@ -94,8 +108,7 @@ export default {
     // Register "language-changed" event.
     this.$bus.on("language-changed", () => {
       // Reset error states
-      this.$refs.inputEmail.resetError();
-      this.$refs.inputPassword.resetError();
+      this.resetErrorMessages();
     });
     // Get email from cookie
     this.email = this.q.cookies.get("email");
@@ -103,8 +116,49 @@ export default {
 
   // The methods of this component.
   methods: {
-    onSubmit() {
+    async onSubmit() {
+      // Reset error messages
+      this.resetErrorMessages();
 
+      // Start login process
+      await this.run(
+        this.$t,
+        async (t) => {
+          // Try to log in
+          const account = await Account.login(this.email, this.password);
+        },
+        (t, error) => {
+          // Get the error code
+          const code = error.code;
+          // Invalid email address
+          if (code === "auth/invalid-email") {
+            this.emailError = t("authentication.register.error.invalidEmail");
+            return false;
+          }
+          // Invalid credentials
+          if (code === "auth/invalid-credential") {
+            this.emailError = t("authentication.login.error.invalidCredentials");
+            return false;
+          }
+          // Too many failed attempts
+          if (code === "auth/too-many-requests") {
+            this.emailError = t("authentication.login.error.tooManyFailedAttempts");
+            return false;
+          }
+          // Account is locked
+          if (code === "auth/account-is-locked") {
+            this.emailError = t("authentication.login.error.accountLocked");
+            return false;
+          }
+          return true;
+        }
+      );
+    },
+
+    resetErrorMessages() {
+      this.emailError = null;
+      this.$refs.inputEmail?.resetError();
+      this.$refs.inputPassword?.resetError();
     }
   }
 }
