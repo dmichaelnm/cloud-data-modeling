@@ -57,7 +57,7 @@ export default {
         }
         // If necessary, show unexpected error dialog
         if (showErrorDialog) {
-          this.showUnexpectedError("default", error);
+          this.showUnexpectedError(t,"default", error);
         }
         // Unlock screen
         this.q.loading.hide();
@@ -110,16 +110,17 @@ export default {
     /**
      * Shows an unexpected error dialog.
      *
+     * @param {function} t The localization function.
      * @param {string} action The action that causes the error dialog.
      * @param {*} error The error object.
      * @param {*} data Optional user data.
      */
-    showUnexpectedError(action, error, data = undefined) {
+    showUnexpectedError(t, action, error, data = undefined) {
       const details = error.message ? error.message : error.toString();
       this.showErrorMessage(
         action,
-        this.$t("error.unexpected.title"),
-        this.$t("error.unexpected.message"),
+        t("error.unexpected.title"),
+        t("error.unexpected.message"),
         details,
         data
       );
