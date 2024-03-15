@@ -146,6 +146,11 @@ export default {
 
   // Called before this component is mounted.
   beforeMount() {
+    // Register "language-changed" event.
+    this.$bus.on("language-changed", () => {
+      // Reset error states
+      this.resetErrorMessages();
+    });
     // Get email from cookie
     this.email = this.q.cookies.get("email");
   },
@@ -157,9 +162,7 @@ export default {
      */
     async onSubmit() {
       // Reset error messages
-      this.emailError = null;
-      this.passwordError = null;
-      this.passwordRepeatError = null;
+      this.resetErrorMessages();
 
       // Check password and password repeat.
       if (this.password !== this.passwordRepeat) {
@@ -223,10 +226,21 @@ export default {
       if (event.action === "success") {
         this.$router.push({path: "login"});
       }
-    }
-  },
+    },
 
-  // Computed values fot his page.
-  computed: {}
+    /**
+     * Resets all error messages.
+     */
+    resetErrorMessages() {
+      this.emailError = null;
+      this.passwordError = null;
+      this.passwordRepeatError = null;
+      this.$refs.inputFistName.resetValidation();
+      this.$refs.inputLastName.resetValidation();
+      this.$refs.inputEmail.resetValidation();
+      this.$refs.inputPassword.resetValidation();
+      this.$refs.inputPasswordRepeat.resetValidation();
+    }
+  }
 }
 </script>
