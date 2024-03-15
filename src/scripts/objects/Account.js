@@ -3,6 +3,7 @@ import {firebaseAuth, firestore} from "src/scripts/firebase";
 import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
   updateProfile
@@ -38,9 +39,10 @@ export class Account extends FirestoreDocument {
             // Account is valid and authorized.
             handler(account);
           }
+        } else {
+          // No account found for the ID.
+          handler(null);
         }
-        // No account found for the ID.
-        handler(null);
       }
     });
   }
@@ -90,6 +92,16 @@ export class Account extends FirestoreDocument {
     await setDoc(docRef, data);
     // Create the account
     return new Account(docRef.path, data);
+  }
+
+  /**
+   * Resets the password for a user and sends a password reset email.
+   *
+   * @param {string} email - The email address of the user.
+   */
+  static async resetPassword(email) {
+    // Request the email
+    await sendPasswordResetEmail(firebaseAuth, email);
   }
 
   /**

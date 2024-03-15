@@ -8,7 +8,7 @@ export default {
     // Copyright Message
     copyright: "&copy; Copyright 2024 Dirk Michael.",
     // Version Information
-    version: "Version 0.1"
+    version: "Version {major}.{minor} (Build: {build})"
   },
 
   // Languages
@@ -108,6 +108,20 @@ export default {
         // Message
         message: "Ihr Konto wurde erfolgreich erstellt. Bevor Sie sich anmelden können, muss noch ein Administrator " +
           "das neue Konto freischalten."
+      }
+    },
+    // Reset Password Labels
+    reset: {
+      // Reset Message
+      message: "Falls Sie Ihr Kennwort vergessen haben, können Sie sich hier eine Email zuschicken lassen, die einen " +
+        "Link enthält, über den Sie ein neues Kennwort vergeben können.",
+      // Successful request
+      success: {
+        // Title
+        title: "Email erfolgreich versendet",
+        // Message
+        message: "Sie erhalten in Kürze eine Email an die angegebene Adresse mit einem Link, über den Sie dann ein " +
+          "neues Kennwort vergeben können."
       }
     }
   }

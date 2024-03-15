@@ -6,7 +6,7 @@ export default {
     // Copyright Message
     copyright: "&copy; Copyright 2024 Dirk Michael.",
     // Version Information
-    version: "Version 0.1"
+    version: "Version {major}.{minor} (Build: {build})"
   },
 
   // Languages
@@ -104,6 +104,20 @@ export default {
         // Message
         message: "Your account was successfully created. Before you can log in, an administrator still needs to " +
           "activate the new account."
+      }
+    },
+    // Reset Password Labels
+    reset: {
+      // Reset Message
+      message: "If you have forgotten your password, you can have an email sent to you here, which contains a link " +
+        "through which you can assign a new password.",
+      // Successful request
+      success: {
+        // Title
+        title: "Email successfully sent",
+        // Message
+        message: "You will soon receive an email at the specified address with a link, through which you can then " +
+          "assign a new password."
       }
     }
   }

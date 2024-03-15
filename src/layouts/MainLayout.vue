@@ -26,11 +26,13 @@ export default {
       // Lock the screen
       this.q.loading.show();
       if (account === null) {
-        // Unlock screen
-        this.q.loading.hide();
         // No authorized account found, redirect to login page.
         this.$router.push({path: "/auth/login"});
+      } else {
+
       }
+      // Unlock screen
+      this.q.loading.hide();
     });
   }
 }

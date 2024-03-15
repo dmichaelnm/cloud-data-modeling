@@ -40,8 +40,6 @@ export default {
       try {
         // Run the task function
         const result = await taskFunction(t);
-        // Unlock screen
-        this.q.loading.hide();
         // Run result function if necessary.
         if (resultFunction) {
           resultFunction(t, result);
@@ -59,6 +57,7 @@ export default {
         if (showErrorDialog) {
           this.showUnexpectedError(t,"default", error);
         }
+      } finally {
         // Unlock screen
         this.q.loading.hide();
       }
