@@ -24,8 +24,8 @@ jobs:
         run: |
           cd src/scripts
           echo "export const version = {" > version.js
-          echo "  major: \"$VERSION_MAJOR\"," >> version.js
-          echo "  minor: \"$VERSION_MINOR\"," >> version.js
+          echo "  major: \"${{vars.VERSION_MAJOR}}\"," >> version.js
+          echo "  minor: \"${{vars.VERSION_MINOR}}\"," >> version.js
           echo "  build: \"$CURRENT_DATE\"" >> version.js
           echo "};" >> version.js
           cd ../..
