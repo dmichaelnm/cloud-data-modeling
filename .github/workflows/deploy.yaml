@@ -1,0 +1,59 @@
+name: Deployment
+run-name: Deployment by @${{ github.actor }}
+
+on:
+  workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Version File
+        run: |
+          cd src/scripts
+          echo "export const version = {" > version.js
+          echo "  major: \"$VERSION_MAJOR\"," >> version.js
+          echo "  minor: \"$VERSION_MINOR\"," >> version.js
+          echo "  build: \"$CURRENT_DATE\"" >> version.js
+          echo "};" >> version.js
+          cd ../..
+
+      - name: Generate Firebase Configuration File
+        run: |
+          cd src/secrets
+          echo "export const firebaseConfig = {" > firebase.js
+          echo "  apiKey: \"${{secrets.FIREBASE_API_KEY}}\"," >> firebase.js
+          echo "  authDomain: \"${{secrets.FIREBASE_AUTH_DOMAIN}}\"," >> firebase.js
+          echo "  projectId: \"${{secrets.FIREBASE_PROJECT_ID}}\"," >> firebase.js
+          echo "  storageBucket: \"${{secrets.FIREBASE_STORAGE_BUCKET}}\"," >> firebase.js
+          echo "  messagingSenderId: \"${{secrets.FIREBASE_MESSAGING_SENDER_ID}}\"," >> firebase.js
+          echo "  appId: \"${{secrets.FIREBASE_APP_ID}}\"," >> firebase.js
+          echo "  measurementId: \"${{secrets.FIREBASE_MEASUREMENT_ID}}\"" >> firebase.js
+          echo "};" >> firebase.js
+          cd ../cd..
+
+      - name: Build Application
+        run: npx quasar build
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Deploy to Firebase Hosting
+        run: firebase deploy --only-hosting --token ${{secrets.FIREBASE_DEPLOY_TOKEN}} --project ${{secrets.FIREBASE_PROJECT_ID}}
+
+      - name: Removing Files
+        run: |
+          cd src/secrets
+          rm firebase.js
