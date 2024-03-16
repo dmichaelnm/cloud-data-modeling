@@ -127,6 +127,8 @@ export default {
         async () => {
           // Try to log in
           await Account.login(this.email, this.password);
+          // Set email as cookie
+          this.q.cookies.set("email", this.email, {expires: 365});
           // Redirect to the main layout
           this.$router.push({path: "/"});
         },

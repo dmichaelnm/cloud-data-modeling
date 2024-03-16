@@ -185,7 +185,7 @@ export default {
             this.q.dark.isActive
           );
           // Set email as cookie
-          this.q.cookies.set("email", this.email);
+          this.q.cookies.set("email", this.email, {expires: 365});
           // Show success dialog.
           this.showSuccessDialog(
             "success",
