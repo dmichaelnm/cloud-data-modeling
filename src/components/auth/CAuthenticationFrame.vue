@@ -100,7 +100,7 @@ import CFrameSection from "components/common/CFrameSection.vue";
 import CSelect from "components/common/CSelect.vue";
 import {version} from "src/scripts/version";
 
-import {getLanguageOptions, getLanguageOption} from "src/scripts/options";
+import {getLanguageOptions, getLanguageOption, getDefaultLanguageOption} from "src/scripts/options";
 
 export default {
   // This is the name of this component.
@@ -142,6 +142,10 @@ export default {
   beforeMount() {
     // Get language attributes from cookie
     this.language = this.q.cookies.get("language");
+    if (!this.language){
+      // If no cookie is set, use browser default
+      this.language = getDefaultLanguageOption(this.$t);
+    }
     this.languageIcon = getLanguageOption(this.$t, this.language)?.icon;
     this.$i18n.locale = this.language;
     // Get dark mode from cookie

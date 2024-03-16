@@ -3,7 +3,7 @@ import {flagUS, flagDE} from "quasar-extras-svg-icons/country-flag-icons";
 /**
  * Returns an array of language options.
  *
- * @param {Object} t - The translation object.
+ * @param {function} t - The translation function.
  * @return {{label, value: string, icon:string}[]} An array of language options.
  */
 export function getLanguageOptions(t) {
@@ -17,7 +17,7 @@ export function getLanguageOptions(t) {
 /**
  * Returns the language option object with the matching code.
  *
- * @param {Object} t - The translation object.
+ * @param {function} t - The translation function.
  * @param {string} code - The code of the language option to find.
  *
  * @return {{label, value: string, icon:string}} - The language option object with the matching code.
@@ -25,4 +25,18 @@ export function getLanguageOptions(t) {
  */
 export function getLanguageOption(t, code) {
   return getLanguageOptions(t).find(opt => opt.value === code);
+}
+
+/**
+ * Get the default language option based on the user's browser language.
+ *
+ * @param {function} t - The translation function.
+ * @return {string} - The default language option.
+ */
+export function getDefaultLanguageOption(t) {
+  const options = getLanguageOptions(t);
+  if (options.find(opt => opt.value === navigator.language)) {
+    return navigator.language;
+  }
+  return "en-US";
 }
