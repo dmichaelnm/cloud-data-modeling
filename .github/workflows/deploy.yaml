@@ -42,7 +42,7 @@ jobs:
           echo "  appId: \"${{secrets.FIREBASE_APP_ID}}\"," >> firebase.js
           echo "  measurementId: \"${{secrets.FIREBASE_MEASUREMENT_ID}}\"" >> firebase.js
           echo "};" >> firebase.js
-          cd ../cd..
+          cd ../..
 
       - name: Build Application
         run: npx quasar build
