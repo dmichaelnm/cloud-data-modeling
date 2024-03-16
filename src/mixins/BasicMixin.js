@@ -1,4 +1,5 @@
 import {useQuasar} from "quasar";
+import {useSessionStore} from "stores/session-store";
 
 export default {
   // The name of this mixin.
@@ -9,6 +10,8 @@ export default {
     return {
       // Quasar
       q: useQuasar(),
+      // Session Store
+      session: useSessionStore(),
       // Message Dialog
       messageDialog: {
         visible: false,

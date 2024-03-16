@@ -39,6 +39,8 @@ export default {
     close: "Close",
     // Login
     login: "Log In",
+    // Logout
+    logout: "Log Out",
     // Register Account
     registerAccount: "Register Account",
     // Reset Password

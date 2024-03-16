@@ -124,7 +124,7 @@ export class Account extends FirestoreDocument {
         return account;
       } else {
         // Logout firestore user
-        await signOut(firebaseAuth);
+        await Account.logout();
         // Account is locked.
         throw {code: "auth/account-is-locked", message: "The account is locked."};
       }
@@ -132,6 +132,14 @@ export class Account extends FirestoreDocument {
       // No account found for the user.
       throw {code: "auth/account-not-found", message: "The firestore account object was not found."};
     }
+  }
+
+  /**
+   * Logs out the current user.
+   */
+  static async logout() {
+    // Sign out firebase account
+    await signOut(firebaseAuth);
   }
 
   /**
@@ -171,6 +179,15 @@ export class Account extends FirestoreDocument {
   constructor(path, data) {
     super(path);
     this.data = data;
+  }
+
+  /**
+   * Retrieves the display name of the user.
+   *
+   * @return {string} The full name of the user.
+   */
+  getDisplayName() {
+    return this.data.profile.firstName + " " + this.data.profile.lastName;
   }
 
   /**

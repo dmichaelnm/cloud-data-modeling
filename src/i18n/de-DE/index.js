@@ -41,6 +41,8 @@ export default {
     close: "Schließen",
     // Login
     login: "Anmelden",
+    // Logout
+    logout: "Abmelden",
     // Register Account
     registerAccount: "Konto erstellen",
     // Reset Password
