@@ -102,7 +102,7 @@ import BasicMixin from "src/mixins/BasicMixin";
 import CAuthenticationFrame from "components/auth/CAuthenticationFrame.vue";
 import CButton from "components/common/CButton.vue";
 import CInput from "components/common/CInput.vue";
-import MessageDialog from "components/dialog/MessageDialog.vue";
+import MessageDialog from "src/dialogs/MessageDialog.vue";
 import {Account} from "src/scripts/objects/Account";
 
 export default {
@@ -166,7 +166,6 @@ export default {
 
       // Check password and password repeat.
       if (this.password !== this.passwordRepeat) {
-        console.debug("password check");
         this.passwordRepeatError = this.$t("authentication.register.error.passwordCheck");
         return;
       }

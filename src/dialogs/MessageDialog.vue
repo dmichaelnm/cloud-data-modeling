@@ -1,3 +1,4 @@
+<!--suppress JSUnresolvedReference -->
 <template>
   <!-- MessageDialog -->
   <c-dialog v-model="visible" :width="600" @dialog-closed="onDialogClosed" :color="color" :title="title">
@@ -84,8 +85,17 @@ export default {
 
   // The methods of this page.
   methods: {
-    onDialogClosed(value) {
+    /**
+     * Executes when the dialog is closed.
+     *
+     * @param {CDialog} dialog - The dialog object.
+     * @param {string} value - The value passed when closing the dialog.
+     */
+    onDialogClosed(dialog, value) {
+      // Emit event
       this.$emit("dialog-closed", {value: value, action: this.action, data: this.data});
+      // Close dialog
+      dialog.hide();
     }
   },
 
