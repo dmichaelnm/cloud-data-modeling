@@ -35,12 +35,24 @@ export default {
   button: {
     // Back
     back: "Back",
+    // Cancel
+    cancel: "Cancel",
+    // Change Password
+    changePassword: "Change Password",
     // Close
     close: "Close",
+    // Dark Mode
+    darkMode: "Dark Mode",
+    // Language
+    language: "Language",
+    // Light Mode
+    lightMode: "Light Mode",
     // Login
     login: "Log In",
     // Logout
     logout: "Log Out",
+    // Okay
+    okay: "Okay",
     // Register Account
     registerAccount: "Register Account",
     // Reset Password
@@ -121,6 +133,34 @@ export default {
         message: "You will soon receive an email at the specified address with a link, through which you can then " +
           "assign a new password."
       }
+    }
+  },
+
+  // Change Password Dialog
+  changePasswordDialog: {
+    // Title
+    title: "Change Password",
+    // Message
+    message: "Here you can assign a new password for your account. For security reasons, you must also provide your " +
+      "old password.",
+    // Labels
+    label: {
+      // Old Password
+      oldPassword: "Old Password",
+      // New Password
+      newPassword: "New Password"
+    },
+    // Error Labels
+    error: {
+      // Invalid Password
+      invalidPassword: "Password is incorrect."
+    },
+    // Success Dialog
+    success: {
+      // Title
+      title: "Password successfully changed",
+      // Message
+      message: "Your password was changed successfully. You can now log in with the new password."
     }
   }
 }

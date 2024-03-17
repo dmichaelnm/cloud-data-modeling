@@ -59,7 +59,7 @@ import CAuthenticationFrame from "components/auth/CAuthenticationFrame.vue";
 import CInput from "components/common/CInput.vue";
 import CButton from "components/common/CButton.vue";
 import {Account} from "src/scripts/objects/Account";
-import MessageDialog from "components/dialog/MessageDialog.vue";
+import MessageDialog from "src/dialogs/MessageDialog.vue";
 
 export default {
   // This is the name of this page.

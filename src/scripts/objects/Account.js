@@ -3,10 +3,13 @@ import {firebaseAuth, firestore} from "src/scripts/firebase";
 import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile
+  updatePassword,
+  updateProfile,
 } from "firebase/auth";
 import {doc, getDoc, setDoc, Timestamp} from "firebase/firestore";
 
@@ -182,12 +185,30 @@ export class Account extends FirestoreDocument {
   }
 
   /**
-   * Retrieves the display name of the user.
+   * Changes the password of the current user.
    *
-   * @return {string} The full name of the user.
+   * @param {string} oldPassword - The current password of the user.
+   * @param {string} newPassword - The new password to set for the user.
    */
-  getDisplayName() {
-    return this.data.profile.firstName + " " + this.data.profile.lastName;
+  async changePassword(oldPassword, newPassword) {
+    // Get firebase user
+    const user = firebaseAuth.currentUser;
+    // Create credentials
+    const credential = EmailAuthProvider.credential(user.email, oldPassword);
+    // Reauthenticate user
+    await reauthenticateWithCredential(user, credential);
+    // Update to new password
+    await updatePassword(user, newPassword);
+  }
+
+  /**
+   * Returns the data structure of this account.
+   * @return {{profile: {firstName: string, lastName: string, email: string},
+   *           preferences: {language: string, darkMode: boolean},
+   *           states: {locked: boolean}}} The account data
+   */
+  getData() {
+    return this.data;
   }
 
   /**

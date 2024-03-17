@@ -37,12 +37,24 @@ export default {
   button: {
     // Back
     back: "Zurück",
+    // Cancel
+    cancel: "Abbrechen",
+    // Change Password
+    changePassword: "Kennwort ändern",
     // Close
     close: "Schließen",
+    // Dark Mode
+    darkMode: "Dunkler Modus",
+    // Language
+    language: "Sprache",
+    // Light Mode
+    lightMode: "Heller Mode",
     // Login
     login: "Anmelden",
     // Logout
     logout: "Abmelden",
+    // Okay
+    okay: "Okay",
     // Register Account
     registerAccount: "Konto erstellen",
     // Reset Password
@@ -125,6 +137,34 @@ export default {
         message: "Sie erhalten in Kürze eine Email an die angegebene Adresse mit einem Link, über den Sie dann ein " +
           "neues Kennwort vergeben können."
       }
+    }
+  },
+
+  // Change Password Dialog
+  changePasswordDialog: {
+    // Title
+    title: "Kennwort ändern",
+    // Message
+    message: "Hier können Sie ein neues Kennwort für Ihren Account vergeben. Dazu müssen Sie aus Sicherheitsgründen " +
+      "auch Ihr altes Kennwort angeben.",
+    // Labels
+    label: {
+      // Old Password
+      oldPassword: "Altes Kennwort",
+      // New Password
+      newPassword: "Neues Kennwort"
+    },
+    // Error Labels
+    error: {
+      // Invalid Password
+      invalidPassword: "Kennwort ist nicht korrekt."
+    },
+    // Success Dialog
+    success: {
+      // Title
+      title: "Kennwort erfolgreich geändert",
+      // Message
+      message: "Ihr Kennwort wurde erfolgreich geändert. Sie können sich ab sofort mit dem neuen Kennwort anmelden."
     }
   }
 }

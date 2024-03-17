@@ -1,7 +1,7 @@
 <!--suppress JSUnresolvedReference -->
 <template>
   <!-- CDialog Dialog -->
-  <q-dialog ref="dialog" :model-value="visible" persistent no-shake>
+  <q-dialog ref="dialog" :model-value="visible" persistent no-shake @before-show="$emit('before-show')">
     <c-frame shadow :width="width">
       <!-- Title Section -->
       <c-frame-section v-if="title" separator>
@@ -17,7 +17,7 @@
         <div class="row">
           <div class="col text-right">
             <c-button v-for="b in buttons" :key="b.value" :label="$t(b.label)" look="link"
-                      @click="onButtonClicked(b.value)"/>
+                      @click="$emit('dialog-closed', $refs.dialog, b.value)"/>
           </div>
         </div>
       </c-frame-section>
@@ -75,7 +75,9 @@ export default {
     }
   },
 
+  // Emittable Events
   emits: [
+    "before-show",
     "dialog-closed"
   ],
 
@@ -89,11 +91,11 @@ export default {
 
   // The methods of this page.
   methods: {
-    onButtonClicked(value) {
-      // Close the dialog
+    /**
+     * Closes the dialog.
+     */
+    close() {
       this.$refs.dialog.hide();
-      // Emit the closing event
-      this.$emit("dialog-closed", {value: value})
     }
   },
 
