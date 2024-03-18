@@ -1,7 +1,7 @@
-<!--suppress JSUnresolvedReference, JSCheckFunctionSignatures -->
+<!--suppress JSUnresolvedReference, JSCheckFunctionSignatures, JSValidateTypes -->
 <template>
   <!-- Main Layout -->
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="hHh Lpr fFf">
     <!-- Change Password Dialog -->
     <change-password-dialog v-model="chgPwdDlgVisible"/>
 
@@ -9,6 +9,8 @@
     <q-header>
       <!-- Header Toolbar -->
       <q-toolbar>
+        <!-- Left Drawer Menu Icon -->
+        <q-btn round flat icon="menu" @click="leftDrawer = !leftDrawer"/>
         <!-- Application Title -->
         <q-toolbar-title>{{ $t("application.title") }}</q-toolbar-title>
         <!-- Space -->
@@ -17,97 +19,67 @@
         <q-btn flat round icon="person">
           <!-- Account Menu -->
           <q-menu>
+            <!-- List -->
             <q-list>
               <!-- Account Name Item -->
-              <q-item dense class="account-menu-header">
-                <!-- Account Name Section -->
-                <q-item-section>
-                  <!-- Account Name Label -->
-                  <q-item-label class="text-center text-bold">
-                    {{ session.account.data.profile.firstName + " " + session.account.data.profile.lastName }}
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
+              <c-menu-item item-class="account-menu-header" label-class="text-center text-bold"
+                           :label="session.account.data.profile.firstName + ' ' + session.account.data.profile.lastName"/>
               <!-- Separator -->
               <q-separator/>
               <!-- Dark Mode Item -->
-              <q-item dense clickable v-close-popup @click="switchDarkMode">
-                <!-- Dark Mode Icon Section -->
-                <q-item-section avatar>
-                  <!-- Dark Mode Icon -->
-                  <q-icon :name="session.account.data.preferences.darkMode ? 'light_mode' : 'dark_mode'" size="xs"/>
-                </q-item-section>
-                <!-- Dark Mode Label Section -->
-                <q-item-section>
-                  <q-item-label>
-                    {{ session.account.data.preferences.darkMode ? $t("button.lightMode") : $t("button.darkMode") }}
-                  </q-item-label>
-                </q-item-section>
-              </q-item>
+              <c-menu-item clickable v-close-popup @click="switchDarkMode"
+                           :icon="session.account.data.preferences.darkMode ? 'light_mode' : 'dark_mode'"
+                           :label="session.account.data.preferences.darkMode ? $t('button.lightMode') : $t('button.darkMode')"/>
+
               <!-- Language Item -->
-              <q-item dense clickable>
-                <!-- Language Icon Section -->
-                <q-item-section avatar>
-                  <!-- Language Icon -->
-                  <q-icon name="language" size="xs"/>
-                </q-item-section>
-                <!-- Language Label Section -->
-                <q-item-section>
-                  <!-- Language Label -->
-                  <q-item-label>{{ $t("button.language") }}</q-item-label>
-                </q-item-section>
+              <c-menu-item clickable icon="language" :label="$t('button.language')">
                 <!-- Language Sub Menu -->
                 <q-menu anchor="top right">
                   <q-list>
-                    <!-- Language Option Item -->
-                    <q-item dense v-for="opt in getLanguageOptions($t)" :key="opt.value" class="language-menu"
-                            clickable v-close-popup @click="switchLanguage(opt.value)">
-                      <!-- Language Icon Section -->
-                      <q-item-section avatar>
-                        <!-- Language Icon -->
-                        <q-icon :name="getLanguageOption($t, opt.value)?.icon" size="xs"/>
-                      </q-item-section>
-                      <!-- Language Label Section -->
-                      <q-item-section>
-                        <!-- Language Label -->
-                        <q-item-label>{{ opt.label }}</q-item-label>
-                      </q-item-section>
-                    </q-item>
+                    <c-menu-item v-for="opt in getLanguageOptions($t)" :key="opt.value" item-class="language-menu"
+                                 clickable v-close-popup @click="switchLanguage(opt.value)"
+                                 :icon="getLanguageOption($t, opt.value)?.icon"
+                                 :label="opt.label"/>
                   </q-list>
                 </q-menu>
-              </q-item>
+              </c-menu-item>
               <!-- Separator -->
               <q-separator/>
-              <!-- Change Password Item -->
-              <q-item dense clickable v-close-popup @click="chgPwdDlgVisible = true">
-                <!-- Empty Icon Section -->
-                <q-item-section avatar/>
-                <!-- Change Password Label Section -->
-                <q-item-section>
-                  <!-- Change Password Label -->
-                  <q-item-label> {{ $t("button.changePassword") }}</q-item-label>
-                </q-item-section>
-              </q-item>
+              <!-- Change Password -->
+              <c-menu-item clickable v-close-popup empty-icon @click="chgPwdDlgVisible = true"
+                           :label="$t('button.changePassword')"/>
               <!-- Separator -->
               <q-separator/>
               <!-- Logout Item -->
-              <q-item dense clickable v-close-popup @click="signOut">
-                <!-- Logout Item Icon Section -->
-                <q-item-section avatar>
-                  <!-- Logout Item -->
-                  <q-icon name="logout" size="xs"/>
-                </q-item-section>
-                <!-- Logout Item Label Section -->
-                <q-item-section>
-                  <!-- Logout Label -->
-                  <q-item-label>{{ $t("button.logout") }}</q-item-label>
-                </q-item-section>
-              </q-item>
+              <c-menu-item clickable v-close-popup icon="logout" @click="signOut" :label="$t('button.logout')"/>
             </q-list>
           </q-menu>
         </q-btn>
       </q-toolbar>
     </q-header>
+
+    <!-- Left Drawer -->
+    <q-drawer v-model="leftDrawer"
+              show-if-above
+              :mini="leftDrawerMiniState"
+              @mouseover="leftDrawerMiniState = false"
+              @mouseout="leftDrawerMiniState=true"
+              mini-to-overlay
+              :width="200"
+              :breakpoint="500"
+              bordered>
+      <!-- Scroll Area -->
+      <q-scroll-area class="fit" :horizontal-thumb-style="{ opacity: 0 }">
+        <!-- List -->
+        <q-list padding>
+
+          <!-- Dashboard -->
+          <c-drawer-item :label="$t('leftDrawer.dashboard')" icon="o_dashboard"/>
+
+        </q-list>
+      </q-scroll-area>
+
+    </q-drawer>
 
     <!-- Footer -->
     <q-footer>
@@ -150,6 +122,12 @@
         <q-space/>
       </q-toolbar>
     </q-footer>
+
+    <!-- Page Container -->
+    <q-page-container>
+      <!-- Router View -->
+      <router-view/>
+    </q-page-container>
   </q-layout>
 </template>
 
@@ -166,6 +144,8 @@
 .language-menu {
   width: 200px;
 }
+
+
 </style>
 
 <script>
@@ -174,11 +154,19 @@ import {getLanguageOptions, getLanguageOption} from "src/scripts/options";
 import {version} from "src/scripts/version";
 import BasicMixin from "src/mixins/BasicMixin";
 import ChangePasswordDialog from "src/dialogs/ChangePasswordDialog.vue";
+import CDrawerItem from "components/common/CDrawerItem.vue";
+import CMenuItem from "components/common/CMenuItem.vue";
 
 export default {
   // The name of this layout.
   name: "MainLayout",
-  components: {ChangePasswordDialog},
+
+  // The components used by this layout.
+  components: {
+    CMenuItem,
+    ChangePasswordDialog,
+    CDrawerItem
+  },
 
   // The used mixins of this layout.
   mixins: [
@@ -218,7 +206,10 @@ export default {
       // Change Password Dialog
       chgPwdDlgVisible: false,
       // Version
-      version: version
+      version: version,
+      // Left Drawer
+      leftDrawer: true,
+      leftDrawerMiniState: true
     }
   },
 

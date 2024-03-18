@@ -74,3 +74,17 @@ body.body--dark {
 .q-field__bottom {
   padding: 4px 4px 0;
 }
+
+// ======================================================================
+// QField (left)
+// ======================================================================
+
+.q-drawer--left.q-drawer--bordered {
+  background-color: $light-background;
+  border-right: 1px solid $light-frame;
+}
+
+.body--dark .q-drawer--left.q-drawer--bordered {
+  background-color: $dark-background;
+  border-right: 1px solid $dark-frame;
+}

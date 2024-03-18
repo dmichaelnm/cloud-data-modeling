@@ -77,6 +77,12 @@ export default {
     }
   },
 
+  // Left Drawer Labels
+  leftDrawer: {
+    // Dashboard
+    dashboard: "Dashboard"
+  },
+
   // Authentication Labels
   authentication: {
     // Login Labels
