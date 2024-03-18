@@ -74,7 +74,7 @@
         <q-list padding>
 
           <!-- Dashboard -->
-          <c-drawer-item :label="$t('leftDrawer.dashboard')" icon="o_dashboard"/>
+          <c-drawer-item :label="$t('leftDrawer.project')" icon="mdi-notebook-outline"/>
 
         </q-list>
       </q-scroll-area>
@@ -191,6 +191,8 @@ export default {
         }
         // Apply the preferred dark mode
         this.q.dark.set(account.data.preferences.darkMode);
+        // Route to project page
+        this.$router.push({path: "project"});
       }
       // Unlock screen
       this.q.loading.hide();

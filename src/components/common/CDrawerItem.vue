@@ -4,7 +4,7 @@
     <!-- Drawer Item Icon Section -->
     <q-item-section avatar>
       <!-- Drawer Item Icon -->
-      <q-icon v-if="icon" :name="icon" color="primary"/>
+      <q-icon v-if="icon" :name="icon" color="secondary"/>
     </q-item-section>
     <!-- Drawer Item Label Section -->
     <q-item-section>

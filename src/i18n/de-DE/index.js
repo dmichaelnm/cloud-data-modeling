@@ -80,7 +80,7 @@ export default {
   // Left Drawer Labels
   leftDrawer: {
     // Dashboard
-    dashboard: "Dashboard"
+    project: "Projekte"
   },
 
   // Authentication Labels
@@ -172,5 +172,17 @@ export default {
       // Message
       message: "Ihr Kennwort wurde erfolgreich geändert. Sie können sich ab sofort mit dem neuen Kennwort anmelden."
     }
+  },
+
+  // Project Labels
+  project: {
+    // Title
+    title: "Projekte",
+    // Empty Message
+    emptyMessage: "Wie es scheint, haben Sie bisher noch kein Projekt erstellt und wurden auch noch keinem Projekt " +
+      "als Mitarbeiter zugeordnet. Sie können nun entweder selbst ein neues Projekt erstellen oder Ihren Projektleiter " +
+      "bitten, Sie einem Projekt zuzuordnen.",
+    // Create New Project Button
+    createButton: "Neues Projekt erstellen"
   }
 }

@@ -78,7 +78,7 @@ export default {
   // Left Drawer Labels
   leftDrawer: {
     // Dashboard
-    dashboard: "Dashboard"
+    project: "Projects"
   },
 
   // Authentication Labels
@@ -168,5 +168,17 @@ export default {
       // Message
       message: "Your password was changed successfully. You can now log in with the new password."
     }
+  },
+
+  // Project Labels
+  project: {
+    // Title
+    title: "Projects",
+    // Empty Message
+    emptyMessage: "It appears that you have not yet created a project and have not yet been assigned to a project as " +
+      "a collaborator. You can now either create a new project yourself or ask your project manager to assign you to " +
+      "a project.",
+    // Create New Project Button
+    createButton: "Create New Project"
   }
 }
