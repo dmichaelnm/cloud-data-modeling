@@ -23,7 +23,7 @@ jobs:
       - name: Generate Version File
         run: |
           cd src/scripts
-          CURRENT_DATE=$(date +%Y-%m-%d %H:%M:%S)
+          CURRENT_DATE=$(date "+%Y-%m-%d %H:%M:%S")
           echo "export const version = {" > version.js
           echo "  major: \"${{vars.VERSION_MAJOR}}\"," >> version.js
           echo "  minor: \"${{vars.VERSION_MINOR}}\"," >> version.js
