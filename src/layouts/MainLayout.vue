@@ -1,4 +1,4 @@
-<!--suppress JSUnresolvedReference -->
+<!--suppress JSUnresolvedReference, JSCheckFunctionSignatures -->
 <template>
   <!-- Main Layout -->
   <q-layout view="lHh Lpr lFf">
@@ -108,6 +108,48 @@
         </q-btn>
       </q-toolbar>
     </q-header>
+
+    <!-- Footer -->
+    <q-footer>
+      <!-- Footer Toolbar -->
+      <q-toolbar>
+        <!-- Left Space -->
+        <q-space/>
+        <!-- Copyright, Version and Social Media -->
+        <div>
+          <!-- Copyright and Version Row -->
+          <div class="row">
+            <!-- Copyright and Version Column -->
+            <div class="col text-center">
+              <span v-html="$t('application.copyright')"/>
+              {{ $t("application.version", {major: version.major, minor: version.minor, build: version.build}) }}
+            </div>
+          </div>
+          <!-- Social Media Row -->
+          <div class="row">
+            <div class="col text-center">
+              <!-- Email -->
+              <q-btn round flat size="xs" icon="mdi-email"
+                     target="_blank" href="mailto:dirkmichaelnm@gmail.com?subject=Cloud%20Data%20Modeling"/>
+              <!-- Discord -->
+              <q-btn round flat size="xs" icon="mdi-discord"
+                     target="_blank" href="https://discord.gg/d3xDh8N4Vu"/>
+              <!-- Twitter -->
+              <q-btn round flat size="xs" icon="mdi-twitter"
+                     target="_blank" href="https://www.twitter.com/dmic2501"/>
+              <!-- Instagram -->
+              <q-btn round flat size="xs" icon="mdi-instagram"
+                     target="_blank" href="https://www.instagram.com/dirk_michael_nm"/>
+              <!-- Twitch -->
+              <q-btn round flat size="xs" icon="mdi-twitch"
+                     target="_blank" href="https://twitch.tv/khrenn"/>
+            </div>
+          </div>
+        </div>
+        <!-- Right Space -->
+        <q-space/>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 
@@ -129,6 +171,7 @@
 <script>
 import {Account} from "src/scripts/objects/Account";
 import {getLanguageOptions, getLanguageOption} from "src/scripts/options";
+import {version} from "src/scripts/version";
 import BasicMixin from "src/mixins/BasicMixin";
 import ChangePasswordDialog from "src/dialogs/ChangePasswordDialog.vue";
 
@@ -173,7 +216,9 @@ export default {
       getLanguageOption: getLanguageOption,
       getLanguageOptions: getLanguageOptions,
       // Change Password Dialog
-      chgPwdDlgVisible: false
+      chgPwdDlgVisible: false,
+      // Version
+      version: version
     }
   },
 
