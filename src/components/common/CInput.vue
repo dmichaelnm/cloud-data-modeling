@@ -3,11 +3,12 @@
   <!-- CInput Component -->
   <!--suppress JSValidateTypes -->
   <q-input ref="inputField"
-           :model-value="modelValue"
+           v-model="modelValue"
            dense
            outlined
            stack-label
            lazy-rules="ondemand"
+           spellcheck="false"
            :autocomplete="autoComplete"
            :autofocus="autoFocus"
            :label="label"
@@ -15,7 +16,7 @@
            :rules="[value => value?.trim().length > 0 || !mandatory || $t('error.input.empty') ]"
            :error="errorMessage !== undefined && errorMessage !== null"
            :error-message="errorMessage"
-           @input="updateValue">
+           @update:modelValue="updateValue">
 
   </q-input>
 </template>

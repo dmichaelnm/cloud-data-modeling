@@ -9,9 +9,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updatePassword,
-  updateProfile,
+  updateProfile
 } from "firebase/auth";
-import {doc, getDoc, setDoc, Timestamp} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, setDoc, query, where, Timestamp} from "firebase/firestore";
 
 /**
  * Represents an account in the system.
@@ -32,7 +32,7 @@ export class Account extends FirestoreDocument {
         handler(null);
       } else {
         // Load the account object for the authenticated firebase user.
-        const account = await Account.getAccount(user.uid);
+        const account = await Account.getAccountById(user.uid);
         if (account) {
           // Check lock state.
           if (account.isLocked()) {
@@ -119,7 +119,7 @@ export class Account extends FirestoreDocument {
     // Sign in
     const credentials = await signInWithEmailAndPassword(firebaseAuth, email, password);
     // Get the account object
-    const account = await Account.getAccount(credentials.user.uid);
+    const account = await Account.getAccountById(credentials.user.uid);
     if (account) {
       // Check the locked state
       if (!account.isLocked()) {
@@ -152,7 +152,7 @@ export class Account extends FirestoreDocument {
    * @return {Promise<undefined|Account>} - A Promise that resolves to either the retrieved Account object, if found,
    *                                        or undefined if no document with the provided ID was found.
    */
-  static async getAccount(id) {
+  static async getAccountById(id) {
     // Create firestore document reference for the account ID
     const docRef = doc(firestore, "account", id);
     // Load document from firestore
@@ -163,6 +163,31 @@ export class Account extends FirestoreDocument {
     }
     // No document with the ID was found.
     return undefined;
+  }
+
+  /**
+   * Retrieves an account from the database based on the provided email.
+   *
+   * @param {string} email - The email associated with the account.
+   * @returns {Promise<undefined|Account>} - A promise that resolves to the account found or undefined if not found.
+   */
+  static async getAccountByEmail(email) {
+    // Create collection
+    const coll = collection(firestore, "account");
+    // Create query
+    const qry = query(coll, where("profile.email", "==", email));
+    // Find the document
+    const snapshot = await getDocs(qry);
+    // Check, if the snapshot is empty
+    if (snapshot.empty) {
+      console.error("getAccountByEmail(" + email + ") has nothing found.");
+      // Return nothing
+      return undefined;
+    }
+    // Get the first document from the snapshot (there should only be one)
+    const document = snapshot.docs[0];
+    // Create and return the account
+    return new Account(document.ref.path, document.data());
   }
 
   /**

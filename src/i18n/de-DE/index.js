@@ -21,6 +21,8 @@ export default {
 
   // Common Labels
   common: {
+    // Description
+    description: "Beschreibung",
     // Email Address
     emailAddress: "Email-Adresse",
     // First Name
@@ -30,7 +32,11 @@ export default {
     // Password
     password: "Kennwort",
     // Repeat Password
-    passwordRepeat: "Kennwort wiederholen"
+    passwordRepeat: "Kennwort wiederholen",
+    // Project Manager
+    projectManager: "Projektleiter",
+    // Project Name
+    projectName: "Name des Projekts"
   },
 
   // Button Labels
@@ -67,6 +73,12 @@ export default {
     yes: "Ja"
   },
 
+  // Hint Labels
+  hint: {
+    // Please enter an email address
+    enterEmail: "Bitte geben Sie eine Email-Adresse an."
+  },
+
   // Error Labels
   error: {
     // Unexpected Error
@@ -79,7 +91,9 @@ export default {
     // Error labels for input fields
     input: {
       // Input field must not be empty.
-      empty: "Dieses Feld darf nicht leer sein."
+      empty: "Dieses Feld darf nicht leer sein.",
+      // Email not found
+      emailNotFound: "Email-Adresse ist unbekannt."
     }
   },
 
@@ -97,6 +111,11 @@ export default {
       title: "Änderungen verwerfen",
       // Message
       message: "Wollen Sie die bisher gemachten Änderungen im Editor wirklich verwerfen?"
+    },
+    // Choose Account Dialog
+    chooseAccount: {
+      // Title
+      title: "Konto auswählen"
     }
   },
 

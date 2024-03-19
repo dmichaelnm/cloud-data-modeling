@@ -19,6 +19,8 @@ export default {
 
   // Common Labels
   common: {
+    // Description
+    description: "Description",
     // Email Address
     emailAddress: "Email Address",
     // First Name
@@ -28,7 +30,11 @@ export default {
     // Password
     password: "Password",
     // Repeat Password
-    passwordRepeat: "Repeat Password"
+    passwordRepeat: "Repeat Password",
+    // Project Manager
+    projectManager: "Project Manager",
+    // Project Name
+    projectName: "Project Name"
   },
 
   // Button Labels
@@ -65,6 +71,12 @@ export default {
     yes: "Yes"
   },
 
+  // Hint Labels
+  hint: {
+    // Please enter an email address
+    enterEmail: "Please enter an email address."
+  },
+
   // Error Labels
   error: {
     // Unexpected Error
@@ -77,7 +89,9 @@ export default {
     // Error labels for input fields
     input: {
       // Input field must not be empty.
-      empty: "This field must not be empty."
+      empty: "This field must not be empty.",
+      // Email not found
+      emailNotFound: "Email address is unknown."
     }
   },
 
@@ -95,6 +109,11 @@ export default {
       title: "Discard Changes",
       // Message
       message: "Do you really want to discard the changes you have made so far in the editor?"
+    },
+    // Choose Account Dialog
+    chooseAccount: {
+      // Title
+      title: "Choose Account"
     }
   },
 

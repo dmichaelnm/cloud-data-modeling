@@ -31,6 +31,7 @@ body.body--dark {
   font-size: 9pt;
 }
 
+/*
 .q-field--dense .q-field__marginal {
   height: 30px;
 }
@@ -44,6 +45,7 @@ body.body--dark {
   min-height: 30px;
   padding: 0 0;
 }
+*/
 
 .q-field--outlined .q-field__control {
   background-color: $light-background-input;
@@ -76,15 +78,15 @@ body.body--dark {
 }
 
 // ======================================================================
-// QField (left)
+// QDrawer (left)
 // ======================================================================
 
 .q-drawer--left.q-drawer--bordered {
-  background-color: $light-background;
+  background-color: $light-background-input;
   border-right: 1px solid $light-frame;
 }
 
 .body--dark .q-drawer--left.q-drawer--bordered {
-  background-color: $dark-background;
+  background-color: $dark-background-input;
   border-right: 1px solid $dark-frame;
 }

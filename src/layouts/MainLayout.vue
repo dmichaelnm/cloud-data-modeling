@@ -1,4 +1,4 @@
-<!--suppress JSUnresolvedReference, JSCheckFunctionSignatures, JSValidateTypes -->
+<!--suppress JSUnresolvedReference, JSCheckFunctionSignatures, JSValidateTypes, SassScssResolvedByNameOnly -->
 <template>
   <!-- Main Layout -->
   <q-layout view="hHh Lpr fFf">
@@ -135,7 +135,7 @@
     </q-footer>
 
     <!-- Page Container -->
-    <q-page-container>
+    <q-page-container class="app-page">
       <!-- Router View -->
       <router-view/>
     </q-page-container>
@@ -156,7 +156,13 @@
   width: 200px;
 }
 
+.app-page {
+  background-color: $light-background;
+}
 
+.body--dark .app-page {
+  background-color: $dark-background;
+}
 </style>
 
 <script>
