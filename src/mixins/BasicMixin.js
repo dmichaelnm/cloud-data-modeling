@@ -58,7 +58,7 @@ export default {
         }
         // If necessary, show unexpected error dialog
         if (showErrorDialog) {
-          this.showUnexpectedError(t,"default", error);
+          this.showUnexpectedError(t, "default", error);
         }
       } finally {
         // Unlock screen
@@ -145,6 +145,28 @@ export default {
         message,
         details,
         [{value: "close", label: "button.close"}],
+        data
+      );
+    },
+
+    /**
+     * Shows a warning message.
+     *
+     * @param {string} action The action that causes the warning dialog.
+     * @param {string} title The warning dialog title.
+     * @param {string} message The warning message of the dialog.
+     * @param {string} details An optional additional detailed message.
+     * @param {*} data Optional user data.
+     * @param {{value:string, label:string}[]} buttons Array of buttons
+     */
+    showWarningDialog(action, title, message, details = undefined, data = undefined, buttons = undefined) {
+      this.showMessageDialog(
+        action,
+        "warning",
+        title,
+        message,
+        details,
+        buttons !== undefined ? buttons : [{value: "close", label: "button.close"}],
         data
       );
     }

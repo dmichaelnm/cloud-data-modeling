@@ -1,7 +1,7 @@
 <!--suppress JSUnresolvedReference -->
 <template>
   <!-- MessageDialog -->
-  <c-dialog v-model="visible" :width="600" @dialog-closed="onDialogClosed" :color="color" :title="title">
+  <c-dialog v-model="visible" :width="600" @dialog-closed="onDialogClosed" :color="color" :title="title" :buttons="buttons">
     <div class="q-col-gutter-y-md">
       <!-- Message Row -->
       <div class="row">
@@ -66,6 +66,11 @@ export default {
     color: {
       type: String,
       default: "primary"
+    },
+    // Array of buttons
+    buttons: {
+      type: Array,
+      default: () => [{value: "close", label: "button.close"}]
     },
     // Optional user data
     data: {}

@@ -4,6 +4,16 @@
   <q-layout view="hHh Lpr fFf">
     <!-- Change Password Dialog -->
     <change-password-dialog v-model="chgPwdDlgVisible"/>
+    <!-- Message Dialog -->
+    <message-dialog v-model="messageDialog.visible"
+                    :action="messageDialog.action"
+                    :title="messageDialog.title"
+                    :message="messageDialog.message"
+                    :details="messageDialog.details"
+                    :color="messageDialog.color"
+                    :data="messageDialog.data"
+                    :buttons="messageDialog.buttons"
+                    @dialog-closed="onMessageDialogClosed"/>
 
     <!-- Header -->
     <q-header>
@@ -74,7 +84,8 @@
         <q-list padding>
 
           <!-- Dashboard -->
-          <c-drawer-item :label="$t('leftDrawer.project')" icon="mdi-notebook-outline"/>
+          <c-drawer-item scope="project" :label="$t('leftDrawer.project')" icon="mdi-notebook-outline"
+                         @click="switchPage"/>
 
         </q-list>
       </q-scroll-area>
@@ -156,6 +167,7 @@ import BasicMixin from "src/mixins/BasicMixin";
 import ChangePasswordDialog from "src/dialogs/ChangePasswordDialog.vue";
 import CDrawerItem from "components/common/CDrawerItem.vue";
 import CMenuItem from "components/common/CMenuItem.vue";
+import MessageDialog from "src/dialogs/MessageDialog.vue";
 
 export default {
   // The name of this layout.
@@ -163,6 +175,7 @@ export default {
 
   // The components used by this layout.
   components: {
+    MessageDialog,
     CMenuItem,
     ChangePasswordDialog,
     CDrawerItem
@@ -192,7 +205,7 @@ export default {
         // Apply the preferred dark mode
         this.q.dark.set(account.data.preferences.darkMode);
         // Route to project page
-        this.$router.push({path: "project"});
+        this.$router.push({path: "/project"});
       }
       // Unlock screen
       this.q.loading.hide();
@@ -253,6 +266,45 @@ export default {
       this.q.cookies.set("language", language, {expires: 365});
       // Update account
       this.session.account.update();
+    },
+
+    /**
+     * This method is used to switch the current page to the given page.
+     * If the editor is locked, it will show a warning dialog and prompt the user to discard the changes.
+     * Otherwise, it will redirect the user to the specified page.
+     *
+     * @param {String} page - The page to switch to.
+     */
+    switchPage(page) {
+      // Check, if editor is locked
+      if (this.session.editorLock) {
+        // Show warning dialog
+        this.showWarningDialog(
+          "discard",
+          this.$t("dialog.discardEditor.title"),
+          this.$t("dialog.discardEditor.message"),
+          undefined,
+          page,
+          [{value: "yes", label: "button.yes"}, {value: "no", label: "button.no"}]
+        );
+      } else {
+        // Redirect to page
+        this.$router.push({path: "/" + page});
+      }
+    },
+
+    /**
+     * This method is called when the message dialog of this page was closed.
+     * @param {{value:string, action:string, data:*}} event The event data.
+     */
+    onMessageDialogClosed(event) {
+      // Discard changes dialog
+      if (event.action === "discard") {
+        // User said yes, so redirect to target page
+        if (event.value === "yes") {
+          this.$router.push({path: "/" + event.data});
+        }
+      }
     }
   }
 }

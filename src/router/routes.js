@@ -7,6 +7,10 @@ const routes = [
       {
         path: 'project',
         component: () => import('pages/project/ProjectOverviewPage.vue')
+      },
+      {
+        path: 'project/editor',
+        component: () => import('pages/project/ProjectEditorPage.vue')
       }
     ]
   },

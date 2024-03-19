@@ -33,6 +33,8 @@ export default {
 
   // Button Labels
   button: {
+    // Apply
+    apply: "Apply",
     // Back
     back: "Back",
     // Cancel
@@ -51,12 +53,16 @@ export default {
     login: "Log In",
     // Logout
     logout: "Log Out",
+    // No
+    no: "No",
     // Okay
     okay: "Okay",
     // Register Account
     registerAccount: "Register Account",
     // Reset Password
-    resetPassword: "Reset Password"
+    resetPassword: "Reset Password",
+    // Yes
+    yes: "Yes"
   },
 
   // Error Labels
@@ -79,6 +85,17 @@ export default {
   leftDrawer: {
     // Dashboard
     project: "Projects"
+  },
+
+  // Common Dialogs
+  dialog: {
+    // Discard changes in editor
+    discardEditor: {
+      // Title
+      title: "Discard Changes",
+      // Message
+      message: "Do you really want to discard the changes you have made so far in the editor?"
+    }
   },
 
   // Authentication Labels
@@ -179,6 +196,20 @@ export default {
       "a collaborator. You can now either create a new project yourself or ask your project manager to assign you to " +
       "a project.",
     // Create New Project Button
-    createButton: "Create New Project"
+    createButton: "Create New Project",
+    // Editor Labels
+    editor: {
+      // Create Project Labels
+      create: {
+        // Title
+        title: "New Project",
+        // Message
+        message: "Here you can create a new project. In a project you manage all the artifacts of your entire model. " +
+          "You can also specify here who is allowed to participate in the project and in what role. You can designate " +
+          "your own project manager who has all rights within the project (except for deleting the project). However, " +
+          "you still remain the owner of the project and can change the project manager at any time. Of course, you " +
+          "can also take on the role of project manager yourself."
+      }
+    }
   }
 }

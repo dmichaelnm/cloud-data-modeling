@@ -1,3 +1,4 @@
+<!--suppress JSUnresolvedReference -->
 <template>
   <!-- Overview Page (empty) -->
   <q-page class="flex flex-center">
@@ -31,16 +32,13 @@
         <!-- Create Button Column -->
         <div class="col text-center">
           <!-- Create Button -->
-          <c-button :label="$t(scope + '.createButton')"/>
+          <c-button :label="$t(scope + '.createButton')" @click="openEditor()"/>
         </div>
       </div>
     </div>
   </q-page>
 
   <!-- Overview Page (not empty) -->
-  <q-page>
-
-  </q-page>
 </template>
 
 <style lang="scss">
@@ -95,7 +93,18 @@ export default {
   },
 
   // The methods of this component.
-  methods: {},
+  methods: {
+    /**
+     * Opens the editor with the specified item ID.
+     *
+     * @param {string?} itemId - The ID of the item to open in the editor.
+     */
+    openEditor(itemId) {
+      this.session.setEditorItemId(itemId);
+      this.session.setEditorLock(true);
+      this.$router.push({path: this.scope + "/editor"});
+    }
+  },
 
   // Computed values fot his component.
   computed: {}

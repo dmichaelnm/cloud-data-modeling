@@ -1,6 +1,6 @@
 <template>
   <!-- CDrawerItem Component -->
-  <q-item clickable v-ripple v-close-popup>
+  <q-item clickable v-ripple v-close-popup @click="$emit('click', scope)">
     <!-- Drawer Item Icon Section -->
     <q-item-section avatar>
       <!-- Drawer Item Icon -->
@@ -31,6 +31,11 @@ export default {
 
   // The public attributes of this component.
   props: {
+    // The scope (page) this drawer item points to
+    scope: {
+      type: String,
+      required: true
+    },
     // The icon of the drawer item
     icon: {
       type: String
@@ -41,6 +46,11 @@ export default {
       required: true
     }
   },
+
+  // Emittable events
+  emits: [
+    "click"
+  ],
 
   // The variables of this component.
   data() {

@@ -35,6 +35,8 @@ export default {
 
   // Button Labels
   button: {
+    // Apply
+    apply: "Übernehmen",
     // Back
     back: "Zurück",
     // Cancel
@@ -53,12 +55,16 @@ export default {
     login: "Anmelden",
     // Logout
     logout: "Abmelden",
+    // No
+    no: "Nein",
     // Okay
     okay: "Okay",
     // Register Account
     registerAccount: "Konto erstellen",
     // Reset Password
-    resetPassword: "Kennwort zurücksetzen"
+    resetPassword: "Kennwort zurücksetzen",
+    // Yes
+    yes: "Ja"
   },
 
   // Error Labels
@@ -81,6 +87,17 @@ export default {
   leftDrawer: {
     // Dashboard
     project: "Projekte"
+  },
+
+  // Common Dialogs
+  dialog: {
+    // Discard changes in editor
+    discardEditor: {
+      // Title
+      title: "Änderungen verwerfen",
+      // Message
+      message: "Wollen Sie die bisher gemachten Änderungen im Editor wirklich verwerfen?"
+    }
   },
 
   // Authentication Labels
@@ -183,6 +200,20 @@ export default {
       "als Mitarbeiter zugeordnet. Sie können nun entweder selbst ein neues Projekt erstellen oder Ihren Projektleiter " +
       "bitten, Sie einem Projekt zuzuordnen.",
     // Create New Project Button
-    createButton: "Neues Projekt erstellen"
+    createButton: "Neues Projekt erstellen",
+    // Editor Labels
+    editor: {
+      // Create Project Labels
+      create: {
+        // Title
+        title: "Neues Projekt",
+        // Message
+        message: "Hier können Sie ein neues Projekt erstellen. In einem Projekt verwalten Sie alle Artefakte Ihres " +
+          "gesamten Modells. Weiterhin können Sie hier festlegen, wer in welcher Rolle an dem Projekt mitwirken darf. " +
+          "Sie können einen eigenen Projektleiter bestimmen, der innerhalb des Projekts alle Rechte (außer dem Löschen " +
+          "des Projekts) innehat. Sie bleiben jedoch weiterhin Eigentümer des Projekts und können den Projektleiter " +
+          "jederzeit austauschen. Sie können natürlich auch selbst die Rolle des Projektleiters übernehmen."
+      }
+    }
   }
 }
