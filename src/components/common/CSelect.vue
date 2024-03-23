@@ -1,6 +1,7 @@
 <template>
   <!-- CSelect Component -->
-  <q-select v-model="modelValue"
+  <q-select ref="select"
+            v-model="modelValue"
             dense
             options-dense
             borderless
@@ -78,6 +79,10 @@ export default {
       console.debug(val);
       this.modelValue = val;
       this.$emit("update:modelValue", val);
+    },
+
+    showPopup() {
+      this.$refs.select.showPopup();
     }
   },
 

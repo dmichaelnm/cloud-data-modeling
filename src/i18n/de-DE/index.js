@@ -21,12 +21,41 @@ export default {
 
   // Common Labels
   common: {
+    // Custom Properties
+    customAttributes: {
+      // Title
+      title: "Eigene Attribute",
+      // Message
+      message: "Hier können Sie eigene Attribute für Projekt festlegen. Diese können später zum Beispiel in Vorlagen " +
+        "zur Erstellung von Skripten verwendet werden.",
+      // No Data Message
+      noData: "Sie haben bisher noch keine eigenen Attribute erstellt.",
+      // Attribute Name
+      name: "Name des Attributes",
+      // Attribute Type
+      type: "Datentyp",
+      // Attribute Value
+      value: "Wert",
+      // Data Types
+      types: {
+        // String
+        string: "Zeichenkette",
+        // Number
+        number: "Zahl",
+        // Boolean
+        boolean: "Wahrheitswert"
+      }
+    },
     // Description
     description: "Beschreibung",
     // Email Address
     emailAddress: "Email-Adresse",
+    // False
+    false: "Falsch",
     // First Name
     firstName: "Vorname",
+    // Common
+    general: "Allgemein",
     // Last Name
     lastName: "Nachname",
     // Password
@@ -36,7 +65,11 @@ export default {
     // Project Manager
     projectManager: "Projektleiter",
     // Project Name
-    projectName: "Name des Projekts"
+    projectName: "Name des Projekts",
+    // Records per page
+    recordsPerPage: "Zeilen pro Seite",
+    // True
+    true: "Wahr"
   },
 
   // Button Labels
@@ -79,6 +112,14 @@ export default {
     enterEmail: "Bitte geben Sie eine Email-Adresse an."
   },
 
+  // Column Header Labels
+  column: {
+    // Member Name
+    memberName: "Name des Mitglieds",
+    // Role
+    role: "Rolle"
+  },
+
   // Error Labels
   error: {
     // Unexpected Error
@@ -115,8 +156,26 @@ export default {
     // Choose Account Dialog
     chooseAccount: {
       // Title
-      title: "Konto auswählen"
+      title: "Konto auswählen",
+      // Message
+      message: "Geben Sie hier die Email-Adresse der Person ein, die Sie auswählen möchten. Prüfen Sie die " +
+        "Verfügbarkeit und klicken Sie dann auf \"Okay\", um die Auswahl abzuschließen.",
+      // Error Messages
+      error: {
+        // Account not found
+        accountNotFound: "Es gibt kein Konto mit dieser Email-Adresse"
+      }
     }
+  },
+
+  // Role Labels
+  role: {
+    // Visitor
+    visitor: "Besucher",
+    // Developer
+    developer: "Entwickler",
+    // Deployer
+    deployer: "Bereitsteller"
   },
 
   // Authentication Labels
@@ -232,6 +291,29 @@ export default {
           "Sie können einen eigenen Projektleiter bestimmen, der innerhalb des Projekts alle Rechte (außer dem Löschen " +
           "des Projekts) innehat. Sie bleiben jedoch weiterhin Eigentümer des Projekts und können den Projektleiter " +
           "jederzeit austauschen. Sie können natürlich auch selbst die Rolle des Projektleiters übernehmen."
+      },
+      // Tab Labels
+      tab: {
+        // Project Team
+        team: {
+          // Title
+          title: "Projekt-Team",
+          // Message
+          message: "Fügen Sie hier Mitglieder zu Ihrem Projekt-Team hinzu, wobei jedes Mitglied eine bestimmte Rolle " +
+            "einnehmen kann, die bestimmt, welche Berechtigungen das Mitglied hat.",
+          // Team Table Labels
+          table: {
+            // No Data Message
+            noData: "Bisher wurden diesem Projekt bis auf den Projektleiter noch keine weiteren Mitglieder zugeordnet. " +
+              "Sie können durch einen Klick auf das \"+\" Icon ein neues Mitglied hinzufügen."
+          },
+          // Dialog title when adding a member has failed
+          addFailed: "Konto nicht hinzugefügt",
+          // Account is already a member
+          alreadyMember: "Das gewählte Konto ist bereits ein Mitglied dieses Projektteams.",
+          // Account is project manager
+          alreadyProjectManager: "Das gewählte Konto ist bereits als Projektleiter eingesetzt."
+        }
       }
     }
   }

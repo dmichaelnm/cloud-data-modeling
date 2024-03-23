@@ -42,7 +42,7 @@ export default {
       // Try catch block to handle errors
       try {
         // Run the task function
-        const result = await taskFunction(t);
+        const result = await taskFunction(t ? t : this.$t);
         // Run result function if necessary.
         if (resultFunction) {
           resultFunction(t, result);

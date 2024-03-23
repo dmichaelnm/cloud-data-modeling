@@ -1,7 +1,14 @@
 <!--suppress JSUnresolvedReference -->
 <template>
   <!-- MessageDialog -->
-  <c-dialog v-model="visible" :width="600" @dialog-closed="onDialogClosed" :color="color" :title="title" :buttons="buttons">
+  <c-dialog ref="dialog"
+            v-model="visible"
+            :width="600"
+            @dialog-closed="onDialogClosed"
+            :action="action"
+            :color="color"
+            :title="title"
+            :buttons="buttons">
     <div class="q-col-gutter-y-md">
       <!-- Message Row -->
       <div class="row">
@@ -93,14 +100,13 @@ export default {
     /**
      * Executes when the dialog is closed.
      *
-     * @param {CDialog} dialog - The dialog object.
-     * @param {string} value - The value passed when closing the dialog.
+     * @param {{action:string, value:string}} event - The event passed when closing the dialog.
      */
-    onDialogClosed(dialog, value) {
+    onDialogClosed(event) {
       // Emit event
-      this.$emit("dialog-closed", {value: value, action: this.action, data: this.data});
+      this.$emit("dialog-closed", {value: event.value, action: event.action, data: this.data});
       // Close dialog
-      dialog.hide();
+      this.$refs.dialog.close();
     }
   },
 

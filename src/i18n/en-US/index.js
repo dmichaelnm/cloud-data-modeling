@@ -19,12 +19,41 @@ export default {
 
   // Common Labels
   common: {
+    // Custom Properties
+    customAttributes: {
+      // Title
+      title: "Custom Attributes",
+      // Message
+      message: "Here you can set your own attributes for the project. These can later be used, for example, in " +
+        "templates to create scripts.",
+      // No Data Message
+      noData: "You have not yet created your own attributes.",
+      // Attribute Name
+      name: "Attribute Name",
+      // Attribute Type
+      type: "Data Type",
+      // Attribute Value
+      value: "Value",
+      // Data Types
+      types: {
+        // String
+        string: "String",
+        // Number
+        number: "Number",
+        // Boolean
+        boolean: "Boolean"
+      }
+    },
     // Description
     description: "Description",
     // Email Address
     emailAddress: "Email Address",
+    // False
+    false: "False",
     // First Name
     firstName: "First Name",
+    // Common
+    general: "General",
     // Last Name
     lastName: "Last Name",
     // Password
@@ -34,7 +63,11 @@ export default {
     // Project Manager
     projectManager: "Project Manager",
     // Project Name
-    projectName: "Project Name"
+    projectName: "Project Name",
+    // Records per page
+    recordsPerPage: "Records per page",
+    // True
+    true: "True"
   },
 
   // Button Labels
@@ -77,6 +110,14 @@ export default {
     enterEmail: "Please enter an email address."
   },
 
+  // Column Header Labels
+  column: {
+    // Member Name
+    memberName: "Member Name",
+    // Role
+    role: "Role"
+  },
+
   // Error Labels
   error: {
     // Unexpected Error
@@ -113,8 +154,26 @@ export default {
     // Choose Account Dialog
     chooseAccount: {
       // Title
-      title: "Choose Account"
+      title: "Choose Account",
+      // Message
+      message: "Enter the email address of the person you would like to select here. Check availability and then " +
+        "click \"Okay\" to complete the selection.",
+      // Error Messages
+      error: {
+        // Account not found
+        accountNotFound: "There is no account with this email address."
+      }
     }
+  },
+
+  // Role Labels
+  role: {
+    // Visitor
+    visitor: "Visitor",
+    // Developer
+    developer: "Developer",
+    // Deployer
+    deployer: "Deployer"
   },
 
   // Authentication Labels
@@ -228,6 +287,29 @@ export default {
           "your own project manager who has all rights within the project (except for deleting the project). However, " +
           "you still remain the owner of the project and can change the project manager at any time. Of course, you " +
           "can also take on the role of project manager yourself."
+      },
+      // Tab Labels
+      tab: {
+        // Project Team
+        team: {
+          // Title
+          title: "Project Team",
+          // Message
+          message: "Add members to your project team here, where each member can have a specific role that determines " +
+            "what permissions the member has.",
+          // Team Table Labels
+          table: {
+            // No Data Message
+            noData: "So far, no other members have been assigned to this project apart from the project manager. " +
+              "You can add a new member by clicking on the \"+\" icon."
+          },
+          // Dialog title when adding a member has failed
+          addFailed: "Account not added",
+          // Account is already a member
+          alreadyMember: "The selected account is already a member of the project team.",
+          // Account is project manager
+          alreadyProjectManager: "The selected account is already assigned as a project manager."
+        }
       }
     }
   }

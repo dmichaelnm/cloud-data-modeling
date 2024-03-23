@@ -1,5 +1,9 @@
 // app global css in SCSS form
 
+// ======================================================================
+// Body
+// ======================================================================
+
 body {
   background-color: $light-background-input;
   color: $light-text;
@@ -77,6 +81,10 @@ body.body--dark {
   padding: 4px 4px 0;
 }
 
+.q-field__native {
+  padding: 0;
+}
+
 // ======================================================================
 // QDrawer (left)
 // ======================================================================
@@ -89,4 +97,113 @@ body.body--dark {
 .body--dark .q-drawer--left.q-drawer--bordered {
   background-color: $dark-background-input;
   border-right: 1px solid $dark-frame;
+}
+
+// ======================================================================
+// QTab
+// ======================================================================
+.q-tab__label {
+  font-size: 8.5pt;
+  color: $secondary;
+  line-height: 1em;
+}
+
+.q-tabs--dense .q-tab {
+  min-height: 24px;
+}
+
+.q-tab--active {
+}
+
+.q-tab__indicator {
+  height: 1px;
+  background: linear-gradient(to right, transparent 0%, $primary 25%, $primary 75%, transparent 100%);
+}
+
+.q-tab-panels {
+  background-color: $light-background;
+}
+
+.body--dark .q-tab-panels {
+  background-color: $dark-background;
+}
+
+.q-tab-panel {
+  padding: 16px 0;
+}
+
+// ======================================================================
+// QTable
+// ======================================================================
+
+.q-table--dense .q-table tbody td {
+  height: 40px;
+}
+
+.q-dark {
+  background-color: $dark-background-input;
+}
+
+.q-table__container {
+  border: 1px solid $light-frame;
+}
+
+.q-table__bottom {
+  border-width: 1px;
+  border-color: $light-frame;
+}
+
+.body--dark .q-table__container {
+  border: 1px solid $dark-frame;
+}
+
+.q-table thead tr {
+  background-color: $light-background;
+  color: $secondary;
+}
+
+.body--dark .q-table thead tr {
+  background-color: $dark-background;
+}
+
+.q-table td {
+  border-color: $light-frame;
+}
+
+.body--dark .q-table td {
+  border-color: $dark-frame;
+}
+
+.q-table tbody td {
+  font-size: 9pt;
+}
+
+.q-table--horizontal-separator thead th {
+  border-bottom: 1px solid $light-frame;
+}
+
+.body--dark .q-table--horizontal-separator thead th {
+  border-bottom: 1px solid $dark-frame;
+}
+
+.q-table__bottom-item {
+  font-size: 8pt;
+  color: $secondary;
+}
+
+// ======================================================================
+// QPopupEdit
+// ======================================================================
+
+.q-popup-edit {
+  padding: 0 8px;
+}
+
+// ======================================================================
+// General CSS Classes
+// ======================================================================
+.text-hint {
+  font-size: 8pt;
+  font-style: italic;
+  color: $secondary;
 }

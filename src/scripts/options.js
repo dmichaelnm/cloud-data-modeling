@@ -40,3 +40,44 @@ export function getDefaultLanguageOption(t) {
   }
   return "en-US";
 }
+
+/**
+ * Returns an array of roles with their label and value.
+ *
+ * @param {function} t - The translation function
+ * @return {{value:string, label:string}[]} An array of roles with label and value properties.
+ */
+export function getRoles(t) {
+  return [
+    {value: "visitor", label: t("role.visitor")},
+    {value: "developer", label: t("role.developer")},
+    {value: "deployer", label: t("role.deployer")}
+  ];
+}
+
+/**
+ * Retrieves the attribute types.
+ *
+ * @param {function} t - The translation function.
+ * @return {{value:string, label:string}[]} An array of attribute types.
+ */
+export function getAttributeTypes(t) {
+  return [
+    {value: "string", label: t("common.customAttributes.types.string")},
+    {value: "number", label: t("common.customAttributes.types.number")},
+    {value: "boolean", label: t("common.customAttributes.types.boolean")}
+  ];
+}
+
+/**
+ * Retrieves boolean values.
+ *
+ * @param {function} t - The translation function.
+ * @return {{value:string, label:string}[]} An array of boolean values.
+ */
+export function getBooleanValues(t) {
+  return [
+    {value: "true", label: t("common.true")},
+    {value: "false", label: t("common.false")}
+  ];
+}

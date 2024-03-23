@@ -1,10 +1,12 @@
 <!--suppress JSValidateTypes -->
 <template>
   <!-- CButton Component -->
-  <q-btn unelevated
+  <q-btn ref="button"
+         unelevated
          :flat="flatAttr"
          no-caps
          spellcheck="false"
+         :disable="disabledState"
          :color="colorAttr"
          :label="label"
          :size="size"
@@ -57,11 +59,32 @@ export default {
     type: {
       type: String,
       default: "button"
+    },
+    // Flag controlling whether the button is disabled
+    disable: {
+      type: Boolean,
+      default: false
+    },
+    // An optional user defined name of the button
+    name: {
+      type: String
+    }
+  },
+
+  // The variables of this component.
+  data() {
+    return {
+      // The disable state of the button
+      disabledState: this.disable
     }
   },
 
   // The methods of this component.
-  methods: {},
+  methods: {
+    setDisable(value) {
+      this.disabledState = value;
+    }
+  },
 
   // Computed values fot his component.
   computed: {

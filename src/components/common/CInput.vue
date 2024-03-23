@@ -5,19 +5,28 @@
   <q-input ref="inputField"
            v-model="modelValue"
            dense
-           outlined
+           :outlined="!borderless"
+           :borderless="borderless"
            stack-label
            lazy-rules="ondemand"
            spellcheck="false"
            :autocomplete="autoComplete"
            :autofocus="autoFocus"
+           :autogrow="autoGrow"
            :label="label"
            :type="type"
+           :hide-bottom-space="hideBottom"
            :rules="[value => value?.trim().length > 0 || !mandatory || $t('error.input.empty') ]"
            :error="errorMessage !== undefined && errorMessage !== null"
            :error-message="errorMessage"
+           :hint="hintMessage"
+           @keyup.enter="$emit('keyEnter')"
            @update:modelValue="updateValue">
-
+    <!-- Append Template -->
+    <template v-if="appendIcon" v-slot:append>
+      <!-- Append Icon -->
+      <q-icon :name="appendIcon" class="cursor-pointer" @click="$emit('appendIconClick')"/>
+    </template>
   </q-input>
 </template>
 
@@ -47,8 +56,17 @@ export default {
       type: Boolean,
       default: false
     },
+    // Flag controlling whether the input field grows with its content.
+    autoGrow: {
+      type: Boolean,
+      default: false
+    },
     // An optional error message
     errorMessage: {
+      type: String
+    },
+    // An optional hint message
+    hintMessage: {
       type: String
     },
     // The label of this component.
@@ -64,8 +82,29 @@ export default {
     type: {
       type: String,
       default: "text"
+    },
+    // Append Icon
+    appendIcon: {
+      type: String
+    },
+    // Hides the bottom area
+    hideBottom:{
+      type: Boolean,
+      default: false
+    },
+    // Flag controlling whether the input field has no border
+    borderless: {
+      type: Boolean,
+      default: false
     }
   },
+
+  // Emittable events
+  emits: [
+    "appendIconClick",
+    "keyEnter",
+    "update:modelValue"
+  ],
 
   // The variables of this page.
   data() {
@@ -77,9 +116,20 @@ export default {
 
   // The methods of this component.
   methods: {
+    /**
+     * Resets the error state of the input field.
+     */
     resetError() {
       this.$refs.inputField.resetValidation();
     },
+
+    /**
+     * Selects the text in the input field.
+     */
+    select() {
+      this.$refs.inputField.select();
+    },
+
     /**
      * Updates the value of the model and emits the "update:modelValue" event.
      *

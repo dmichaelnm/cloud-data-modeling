@@ -1,7 +1,9 @@
 <!--suppress JSUnresolvedReference -->
 <template>
   <!-- CDialog Dialog -->
-  <q-dialog ref="dialog" :model-value="visible" persistent no-shake @before-show="$emit('before-show')">
+  <q-dialog ref="dialog" :model-value="visible" persistent no-shake
+            @before-show="$emit('before-show')"
+            @show="$emit('show')">
     <c-frame shadow :width="width">
       <!-- Title Section -->
       <c-frame-section v-if="title" separator>
@@ -16,8 +18,8 @@
       <c-frame-section dense>
         <div class="row">
           <div class="col text-right">
-            <c-button v-for="b in buttons" :key="b.value" :label="$t(b.label)" look="link"
-                      @click="$emit('dialog-closed', $refs.dialog, b.value)"/>
+            <c-button v-for="b in buttons" :key="b.value" :name="b.value" :label="$t(b.label)" look="link"
+                      @click="$emit('dialog-closed', {action: action, value: b.value})" ref="buttons"/>
           </div>
         </div>
       </c-frame-section>
@@ -54,6 +56,11 @@ export default {
 
   // The public attributes of this page.
   props: {
+    // Action that causes this dialog to be shown
+    action: {
+      type: String,
+      default: "default"
+    },
     // Title of the dialog
     title: {
       type: String
@@ -78,7 +85,8 @@ export default {
   // Emittable Events
   emits: [
     "before-show",
-    "dialog-closed"
+    "dialog-closed",
+    "show"
   ],
 
   // The variables of this page.
@@ -96,6 +104,16 @@ export default {
      */
     close() {
       this.$refs.dialog.hide();
+    },
+
+    /**
+     * Returns a dialog button element with the specified name.
+     *
+     * @param {string} name - The name of the button to find.
+     * @return {CButton} - The button element found matching the specified value, or `undefined` if no match is found.
+     */
+    getButton(name) {
+      return this.$refs.buttons.find(btn => btn.name === name);
     }
   },
 

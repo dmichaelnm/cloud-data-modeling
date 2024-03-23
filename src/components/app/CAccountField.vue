@@ -8,7 +8,7 @@
       </div>
     </template>
     <template v-slot:append>
-      <q-icon name="person_search" @click="$emit('click')"/>
+      <q-icon name="person_search" class="cursor-pointer" @click="$emit('click')"/>
     </template>
   </q-field>
 </template>
