@@ -20,7 +20,6 @@
 
 <script>
 import {Account} from "src/scripts/objects/Account";
-import ChooseAccountDialog from "src/dialogs/ChooseAccountDialog.vue";
 
 export default {
   // The name of this component.

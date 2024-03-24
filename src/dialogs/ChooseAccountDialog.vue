@@ -106,7 +106,7 @@ export default {
       // Start the search process
       await this.run(
         this.$t,
-        async (t) => {
+        async () => {
           // Find the account for the entered email
           this.account = await Account.getAccountByEmail(this.email);
           if (this.account) {
