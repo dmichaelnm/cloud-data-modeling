@@ -21,6 +21,8 @@ export default {
 
   // Common Labels
   common: {
+    // Altered
+    altered: "Geändert",
     // Custom Properties
     customAttributes: {
       // Title
@@ -46,6 +48,8 @@ export default {
         boolean: "Wahrheitswert"
       }
     },
+    // Created
+    created: "Erstellt",
     // Description
     description: "Beschreibung",
     // Email Address
@@ -58,6 +62,8 @@ export default {
     general: "Allgemein",
     // Last Name
     lastName: "Nachname",
+    // Owner
+    owner: "Eigentümer",
     // Password
     password: "Kennwort",
     // Repeat Password
@@ -69,7 +75,9 @@ export default {
     // Records per page
     recordsPerPage: "Zeilen pro Seite",
     // True
-    true: "Wahr"
+    true: "Wahr",
+    // Role
+    yourRole: "Deine Rolle"
   },
 
   // Button Labels
@@ -175,7 +183,9 @@ export default {
     // Developer
     developer: "Entwickler",
     // Deployer
-    deployer: "Bereitsteller"
+    deployer: "Bereitsteller",
+    // Owner
+    owner: "Eigentümer"
   },
 
   // Authentication Labels
@@ -277,6 +287,8 @@ export default {
     emptyMessage: "Wie es scheint, haben Sie bisher noch kein Projekt erstellt und wurden auch noch keinem Projekt " +
       "als Mitarbeiter zugeordnet. Sie können nun entweder selbst ein neues Projekt erstellen oder Ihren Projektleiter " +
       "bitten, Sie einem Projekt zuzuordnen.",
+    // Overview Message
+    overviewMessage: "Hier sehen Sie eine Übersicht über alle Projekte, in die Sie involviert sind.",
     // Create New Project Button
     createButton: "Neues Projekt erstellen",
     // Editor Labels

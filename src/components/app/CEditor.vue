@@ -40,9 +40,9 @@
             <!-- Editor Buttons Column -->
             <div class="col q-gutter-x-md">
               <!-- Apply Button -->
-              <c-button :label="$t('button.apply')"/>
+              <c-button :label="$t('button.apply')" @click="handlerApply"/>
               <!-- Cancel Button -->
-              <c-button :label="$t('button.cancel')" color="secondary" @click="onCancel"/>
+              <c-button :label="$t('button.cancel')" color="secondary" @click="close"/>
             </div>
           </div>
           <div class="col-1"/>
@@ -98,12 +98,20 @@ export default {
     scope: {
       type: String,
       required: true
+    },
+    // Handler function that is called when then "Apply" button was clicked
+    handlerApply: {
+      type: Function,
+      required: true
     }
   },
 
   // The methods of this component
   methods: {
-    onCancel() {
+    /**
+     * Closes the editor and returns to the overview page.
+     */
+    close() {
       this.session.setEditorLock(false);
       this.$router.push({path: "/" + this.scope});
     }

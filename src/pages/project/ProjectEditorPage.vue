@@ -1,7 +1,8 @@
 <!-- Project Editor Page -->
+<!--suppress JSUnresolvedReference -->
 <template>
   <!-- Editor Component -->
-  <c-editor scope="project">
+  <c-editor ref="editor" scope="project" :handler-apply="onApply">
     <!-- Choose Account Dialog -->
     <choose-account-dialog v-model="chooseAccountDialogVisible"
                            :action="chooseAccountDialogAction"
@@ -16,7 +17,7 @@
                     :data="messageDialog.data"/>
 
     <!-- Form -->
-    <q-form>
+    <q-form ref="form" @submit="onApply">
       <div>
         <!-- Tab Definition -->
         <q-tabs v-model="currentTab" dense no-caps align="left">
@@ -117,8 +118,9 @@ import CAccountField from "components/app/CAccountField.vue";
 import ChooseAccountDialog from "src/dialogs/ChooseAccountDialog.vue";
 import CTable from "components/common/CTable.vue";
 import MessageDialog from "src/dialogs/MessageDialog.vue";
-import {getRoles} from "src/scripts/options";
 import CCustomAttributes from "components/app/CCustomAttributes.vue";
+import {getRoles} from "src/scripts/options";
+import {Project} from "src/scripts/objects/Project";
 
 export default {
   // The name of this page
@@ -142,6 +144,7 @@ export default {
 
   // Called before this page is mounted.
   beforeMount() {
+    // Set own account as project manager per default.
     this.projectManager = this.session.account;
   },
 
@@ -165,7 +168,9 @@ export default {
       // Function for getting the role options
       getRoles: getRoles,
       // Custom Attributes
-      customAttributes: []
+      customAttributes: [],
+      // Current project
+      currentProject: undefined
     }
   },
 
@@ -229,9 +234,57 @@ export default {
       }
     },
 
+    /**
+     * Remove the account at the specified row index from the teamMembers array
+     *
+     * @param {number} rowIndex - The index of the account to be removed
+     */
     onRemoveAccount(rowIndex) {
       // Remove the selected team member
       this.teamMembers.splice(rowIndex, 1);
+    },
+
+    /**
+     * This method is called when the 'Apply' button is clicked in the form.
+     * It is responsible for validating the form data and persisting the project.
+     * If the form validation is successful, it will either update the current project or create a new project.
+     */
+    async onApply() {
+      if (await this.$refs.form.validate()) {
+        // Form validation was successful, start persisting the project
+        if (this.currentProject) {
+          // Update current Project
+        } else {
+          // Create new project
+          await this.run(
+            this.$t,
+            async () => {
+              // Create data structure for the new project
+              const data = {
+                name: this.projectName,
+                description: this.projectDescription,
+                owner: this.session.account.id,
+                manager: this.projectManager.id,
+                members: this.teamMembers.map(mbr => {
+                  return {accountId: mbr.account.id, role: mbr.role}
+                }),
+                attributes: this.customAttributes.map(att => {
+                  return {name: att.name, type: att.type, value: att.value}
+                })
+              }
+              // Add the project to firestore
+              const project = await Project.create(data);
+              await project.init();
+              // Add project to project list
+              this.session.projectList.push(project);
+              // Close the editor
+              this.$refs.editor.close();
+            }
+          );
+        }
+      } else {
+        // Validation has failed, don't close the editor.
+      }
     }
   }
 }

@@ -1,5 +1,6 @@
 import {useQuasar} from "quasar";
 import {useSessionStore} from "stores/session-store";
+import {Timestamp} from "firebase/firestore";
 
 export default {
   // The name of this mixin.
@@ -28,6 +29,20 @@ export default {
 
   // The methods of this mixin.
   methods: {
+    /**
+     * Format a timestamp to a string representation based on the specified language.
+     *
+     * @param {Timestamp} timestamp - The timestamp object to be formatted.
+     * @param {string} language - The language code used to determine the formatting.
+     * @return {string} - The formatted timestamp string.
+     */
+    formatTimestamp(timestamp, language) {
+      if (timestamp instanceof Timestamp) {
+        return timestamp.toDate().toLocaleString(language);
+      }
+      return "";
+    },
+
     /**
      * Runs a task function asynchronously.
      *

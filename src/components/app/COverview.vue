@@ -1,7 +1,7 @@
 <!--suppress JSUnresolvedReference -->
 <template>
   <!-- Overview Page (empty) -->
-  <q-page class="flex flex-center">
+  <q-page v-if="items.length === 0" class="flex flex-center">
     <div class="q-col-gutter-y-md">
       <!-- Title Row -->
       <div class="row">
@@ -11,7 +11,7 @@
       <!-- Upper Separator -->
       <div class="row">
         <div class="col-4"/>
-        <div class="col-4 overview-title-separator" style="height: 1px"/>
+        <div class="col-4 overview-empty-page-title-separator" style="height: 1px"/>
         <div class="col-4"/>
       </div>
       <!-- Empty Message Row -->
@@ -24,7 +24,7 @@
       <!-- Lower Separator -->
       <div class="row">
         <div class="col-4"/>
-        <div class="col-4 overview-title-separator" style="height: 1px"/>
+        <div class="col-4 overview-empty-page-title-separator" style="height: 1px"/>
         <div class="col-4"/>
       </div>
       <!-- Create Button Row -->
@@ -39,11 +39,78 @@
   </q-page>
 
   <!-- Overview Page (not empty) -->
+  <q-page v-if="items.length > 0">
+    <div class="overview-page">
+      <div class="row">
+        <div class="col-1"/>
+        <div class="col-10 q-col-gutter-y-xs ">
+          <!-- Title Row -->
+          <div class="row">
+            <!-- Title Column -->
+            <div class="col overview-title overview-inset">{{ $t(scope + ".title") }}</div>
+          </div>
+          <!-- Upper Separator -->
+          <div class="row">
+            <div class="col overview-page-title-separator" style="height: 1px"/>
+          </div>
+          <!-- Message Row -->
+          <div class="row">
+            <!-- Message Column -->
+            <div class="col overview-inset">{{ $t(this.scope + ".overviewMessage") }}</div>
+          </div>
+          <!-- Create Button Row -->
+          <div class="row" style="padding-top: 32px">
+            <!-- Create Button Column -->
+            <div class="col text-right">
+              <!-- Create Button -->
+              <c-button :label="$t(scope + '.createButton')" @click="openEditor()"/>
+            </div>
+          </div>
+          <!-- Table Row -->
+          <div class="row">
+            <!-- Table Column -->
+            <div class="col">
+              <!-- Projects Table -->
+              <c-table :columns="columns"
+                       :rows="items">
+                <!-- Created Column -->
+                <template v-slot:body-cell-created="{props}">
+                  <q-td :props="props">
+                    <div>{{ props.row.data.meta.createdBy }}</div>
+                    <div>
+                      {{ formatTimestamp(props.row.data.meta.createdAt, session.account.data.preferences.language) }}
+                    </div>
+                  </q-td>
+                </template>
+                <!-- Publish columns to the owner component -->
+                <template v-for="col in columns.filter(c => c.name !== 'created')"
+                          v-slot:[`body-cell-${col.name}`]="{props}">
+                  <slot :name="'body-cell-' + col.name" :props="props">
+                    <q-td :props="props">
+                      {{ props.value }}
+                    </q-td>
+                  </slot>
+                </template>
+              </c-table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </q-page>
 </template>
 
 <style lang="scss">
-.overview-title-separator {
+.overview-page {
+  padding: 16px;
+}
+
+.overview-empty-page-title-separator {
   background: linear-gradient(90deg, transparent 0%, $primary 50%, transparent 100%);
+}
+
+.overview-page-title-separator {
+  background: linear-gradient(90deg, transparent 0%, $primary 2%, $primary 98%, transparent 100%);
 }
 
 .overview-title {
@@ -51,11 +118,17 @@
   font-size: 14pt;
   font-weight: bold;
 }
+
+.overview-inset {
+  padding-left: 32px;
+}
+
 </style>
 
 <script>
 import BasicMixin from "src/mixins/BasicMixin";
 import CButton from "components/common/CButton.vue";
+import CTable from "components/common/CTable.vue";
 
 export default {
   // This is the name of this component.
@@ -67,7 +140,7 @@ export default {
   ],
 
   // The used components of this component.
-  components: {CButton},
+  components: {CTable, CButton},
 
   // The public attributes of this component.
   props: {
@@ -78,6 +151,11 @@ export default {
     },
     // Array of items to be shown in the overview.
     items: {
+      type: Array,
+      required: true
+    },
+    // Columns to be shown in the overview table
+    columns: {
       type: Array,
       required: true
     }

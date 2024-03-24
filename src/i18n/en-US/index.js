@@ -19,6 +19,8 @@ export default {
 
   // Common Labels
   common: {
+    // Altered
+    altered: "Altered",
     // Custom Properties
     customAttributes: {
       // Title
@@ -44,6 +46,8 @@ export default {
         boolean: "Boolean"
       }
     },
+    // Created
+    created: "Created",
     // Description
     description: "Description",
     // Email Address
@@ -56,6 +60,8 @@ export default {
     general: "General",
     // Last Name
     lastName: "Last Name",
+    // Owner
+    owner: "Owner",
     // Password
     password: "Password",
     // Repeat Password
@@ -67,7 +73,9 @@ export default {
     // Records per page
     recordsPerPage: "Records per page",
     // True
-    true: "True"
+    true: "True",
+    // Role
+    yourRole: "Your Role",
   },
 
   // Button Labels
@@ -173,7 +181,9 @@ export default {
     // Developer
     developer: "Developer",
     // Deployer
-    deployer: "Deployer"
+    deployer: "Deployer",
+    // Owner
+    owner: "Owner"
   },
 
   // Authentication Labels
@@ -273,6 +283,8 @@ export default {
     emptyMessage: "It appears that you have not yet created a project and have not yet been assigned to a project as " +
       "a collaborator. You can now either create a new project yourself or ask your project manager to assign you to " +
       "a project.",
+    // Overview Message
+    overviewMessage: "Here you can see an overview of all the projects in which you are involved.",
     // Create New Project Button
     createButton: "Create New Project",
     // Editor Labels

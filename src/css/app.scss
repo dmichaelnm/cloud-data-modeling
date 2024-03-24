@@ -35,22 +35,6 @@ body.body--dark {
   font-size: 9pt;
 }
 
-/*
-.q-field--dense .q-field__marginal {
-  height: 30px;
-}
-
-.q-field--auto-height.q-field--dense .q-field__control  {
-  height: 30px;
-  min-height: 30px;
-}
-
-.q-field--auto-height.q-field--dense .q-field__native{
-  min-height: 30px;
-  padding: 0 0;
-}
-*/
-
 .q-field--outlined .q-field__control {
   background-color: $light-background-input;
   border-radius: 4px;
@@ -205,5 +189,10 @@ body.body--dark {
 .text-hint {
   font-size: 8pt;
   font-style: italic;
+  color: $secondary;
+}
+
+.text-small {
+  font-size: 8pt;
   color: $secondary;
 }

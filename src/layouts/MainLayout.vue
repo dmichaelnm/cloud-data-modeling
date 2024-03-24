@@ -167,6 +167,7 @@
 
 <script>
 import {Account} from "src/scripts/objects/Account";
+import {Project} from "src/scripts/objects/Project";
 import {getLanguageOptions, getLanguageOption} from "src/scripts/options";
 import {version} from "src/scripts/version";
 import BasicMixin from "src/mixins/BasicMixin";
@@ -195,7 +196,7 @@ export default {
   // Called before this layout is created.
   beforeCreate() {
     // Catch changes for the current account.
-    Account.onAccountStateChanged((account) => {
+    Account.onAccountStateChanged(async (account) => {
       // Lock the screen
       this.q.loading.show();
       if (account === null) {
@@ -210,6 +211,9 @@ export default {
         }
         // Apply the preferred dark mode
         this.q.dark.set(account.data.preferences.darkMode);
+        // Load projects and bind it to the session
+        this.session.setProjects(await Project.loadProjects());
+        console.debug(this.session.projectList);
         // Route to project page
         this.$router.push({path: "/project"});
       }
@@ -308,6 +312,9 @@ export default {
       if (event.action === "discard") {
         // User said yes, so redirect to target page
         if (event.value === "yes") {
+          // Disable editor lock
+          this.session.editorLock = false;
+          // Redirect to target page
           this.$router.push({path: "/" + event.data});
         }
       }

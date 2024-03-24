@@ -16,7 +16,12 @@ export const useSessionStore = defineStore('session', {
      * Flag indicating whether there is an open editor.
      * @type {boolean}
      */
-    editorLock: false
+    editorLock: false,
+    /**
+     * List of all projects of the current account
+     * @type {Project[]}
+     */
+    projectList: []
   }),
   getters: {},
   actions: {
@@ -43,6 +48,14 @@ export const useSessionStore = defineStore('session', {
      */
     setEditorLock(lock) {
       this.editorLock = lock;
+    },
+    /**
+     * Sets the project list to the provided array of projects.
+     *
+     * @param {Project[]} projects - An array of projects to set as the new project list.
+     */
+    setProjects(projects) {
+      this.projectList = projects;
     }
   }
 });

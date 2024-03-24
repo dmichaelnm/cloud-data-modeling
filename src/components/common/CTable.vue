@@ -8,6 +8,7 @@
       <div class="col">
         <!-- Table -->
         <q-table dense flat
+                 wrap-cells
                  :columns="tableColumns"
                  :rows="rows"
                  :hide-no-data="!noDataLabel"
@@ -97,11 +98,14 @@
 
 .popup-edit {
   border-width: 0;
+  border-radius: 0;
+  border-bottom: 2px solid $accent;
   background-color: $light-background-input;
 }
 
 .body--dark .popup-edit {
   border-width: 0;
+  border-bottom: 2px solid $accent;
   background-color: $dark-background-input;
 }
 </style>
