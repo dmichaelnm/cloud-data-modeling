@@ -43,7 +43,7 @@
     <div class="overview-page">
       <div class="row">
         <div class="col-1"/>
-        <div class="col-10 q-col-gutter-y-xs ">
+        <div class="col-10 q-col-gutter-y-sm ">
           <!-- Title Row -->
           <div class="row">
             <!-- Title Column -->
