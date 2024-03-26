@@ -172,7 +172,6 @@ export default {
      * @param {string} message The warning message of the dialog.
      * @param {string} details An optional additional detailed message.
      * @param {*} data Optional user data.
-     * @param {{value:string, label:string}[]} buttons Array of buttons
      */
     showWarningDialog(action, title, message, details = undefined, data = undefined) {
       this.showMessageDialog(
