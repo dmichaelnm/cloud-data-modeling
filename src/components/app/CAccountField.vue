@@ -1,14 +1,14 @@
 <!-- Account Field Component -->
 <!--suppress JSUnresolvedReference, SassScssResolvedByNameOnly -->
 <template>
-  <q-field dense outlined stack-label :label="$t('common.projectManager')">
+  <q-field dense outlined stack-label :label="$t('common.projectManager')" :disable="disable">
     <template v-slot:control>
       <div class="account-field">
         {{ modelValue ? modelValue.data.profile.firstName + " " + modelValue.data.profile.lastName : "" }}
       </div>
     </template>
     <template v-slot:append>
-      <q-icon name="person_search" class="cursor-pointer" @click="$emit('click')"/>
+      <q-icon name="person_search" class="cursor-pointer" @click="$emit('click')" v-if="!disable"/>
     </template>
   </q-field>
 </template>
@@ -34,6 +34,11 @@ export default {
     // The label of this component
     label: {
       type: String
+    },
+    // Flag controlling whether this component is disabled
+    disable: {
+      type: Boolean,
+      default: false
     }
   },
 

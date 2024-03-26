@@ -174,14 +174,36 @@ export default {
      * @param {*} data Optional user data.
      * @param {{value:string, label:string}[]} buttons Array of buttons
      */
-    showWarningDialog(action, title, message, details = undefined, data = undefined, buttons = undefined) {
+    showWarningDialog(action, title, message, details = undefined, data = undefined) {
       this.showMessageDialog(
         action,
         "warning",
         title,
         message,
         details,
-        buttons !== undefined ? buttons : [{value: "close", label: "button.close"}],
+        [{value: "close", label: "button.close"}],
+        data
+      );
+    },
+
+    /**
+     * Show a confirmation dialog.
+     *
+     * @param {string} action - The action that triggered the dialog.
+     * @param {string} title - The title of the dialog.
+     * @param {string} message - The message displayed in the dialog.
+     * @param {string} [color="primary"] - The color scheme of the dialog.
+     * @param {string} [details=undefined] - Additional details to be displayed in the dialog.
+     * @param {Object} [data=undefined] - Additional data to be passed.
+     */
+    showConfirmationDialog(action, title, message, color = "primary", details = undefined, data = undefined) {
+      this.showMessageDialog(
+        action,
+        color,
+        title,
+        message,
+        details,
+        [{value: "yes", label: "button.yes"}, {value: "no", label: "button.no"}],
         data
       );
     }

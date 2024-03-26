@@ -184,6 +184,8 @@ export default {
     developer: "Entwickler",
     // Deployer
     deployer: "Bereitsteller",
+    // Manager
+    manager: "Projektleiter",
     // Owner
     owner: "Eigentümer"
   },
@@ -304,6 +306,15 @@ export default {
           "des Projekts) innehat. Sie bleiben jedoch weiterhin Eigentümer des Projekts und können den Projektleiter " +
           "jederzeit austauschen. Sie können natürlich auch selbst die Rolle des Projektleiters übernehmen."
       },
+      // Edit Project Labels
+      edit: {
+        // Title
+        title: "Projekt bearbeiten",
+        // Message
+        message: "Hier können Sie die Eigenschaften des Projekts bearbeiten, sowie die neue Mitglieder zum Projektteam " +
+          "hinzufügen, Rollen von Migliedern ändern oder auch Mitglieder entfernen. Wenn Sie der Eigentümer des " +
+          "Projekts sind, können Sie auch den Projektleiter austauschen."
+      },
       // Tab Labels
       tab: {
         // Project Team
@@ -327,6 +338,13 @@ export default {
           alreadyProjectManager: "Das gewählte Konto ist bereits als Projektleiter eingesetzt."
         }
       }
+    },
+    // Delete Labels
+    delete: {
+      // Title
+      title: "Projekt löschen?",
+      // Message
+      message: "Sind Sie sicher, dass Sie das Projekt \"{name}\" wirklich löschen wollen? Diese Aktion kann nicht rückgängig gemacht werden."
     }
   }
 }

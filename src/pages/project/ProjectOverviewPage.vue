@@ -1,11 +1,11 @@
-<!--suppress JSUnresolvedReference -->
+<!--suppress JSUnresolvedReference, JSIncompatibleTypesComparison -->
 <template>
   <!-- Dashboard Overview -->
   <c-overview scope="project"
               :items="this.session.projectList"
-              :columns="[{name: 'actions', align: 'left', headerStyle: 'width: 75px'},
+              :columns="[{name: 'actions', align: 'left', headerStyle: 'width:100px'},
                          {name: 'name', label: $t('common.projectName'), align: 'left', headerStyle: 'width: 500px',
-                          sortable: true, field: row => row.data.name},
+                          sortable: true},
                          {name: 'owner', label: $t('common.owner'), align: 'left', headerStyle: 'width: 150px',
                           sortable: true, field: row => row.ownerName},
                          {name: 'manager', label: $t('common.projectManager'), align: 'left', headerStyle: 'width: 150px',
@@ -13,24 +13,9 @@
                          {name: 'role', label: $t('common.yourRole'), align: 'left', headerStyle: 'width: 150px',
                           sortable: true, field: row => $t('role.' + row.role)},
                          {name: 'created', label: $t('common.created'), align: 'left', headerStyle: 'width: 150px'},
-                         {name: 'altered', label: $t('common.altered'), align: 'left'}]">
-    <!-- Project Name Template -->
-    <template v-slot:body-cell-name="{props}">
-      <q-td :props="props">
-        <div>{{ props.row.data.name }}</div>
-        <div class="text-small">{{ props.row.data.description }}</div>
-      </q-td>
-    </template>
-    <!-- Project Actions -->
-    <template v-slot:body-cell-actions="{props}">
-      <q-td :props="props">
-        <!-- Edit Button -->
-        <q-btn round flat size="xs" icon="edit" color="primary"/>
-        <!-- Delete Button -->
-        <q-btn round flat size="xs" icon="delete" color="primary"/>
-      </q-td>
-    </template>
-  </c-overview>
+                         {name: 'altered', label: $t('common.altered'), align: 'left'}]"
+              :permissions="getOverviewPermissions"
+              :handler-delete="onDeleteProject"/>
 </template>
 
 <script>
@@ -47,7 +32,9 @@ export default {
   ],
 
   // The used components of this page.
-  components: {COverview},
+  components: {
+    COverview
+  },
 
   // The public attributes of this page.
   props: {},
@@ -62,7 +49,44 @@ export default {
   },
 
   // The methods of this page.
-  methods: {},
+  methods: {
+    /**
+     * Retrieves the overview permissions for a given mode and project.
+     *
+     * @param {string} mode - The mode for which the permissions are retrieved.
+     * @param {Project} project - The project for which the permissions are retrieved.
+     * @returns {boolean} - Returns true if the user has overview permissions, and false otherwise.
+     */
+    getOverviewPermissions(mode, project) {
+      // Check for edit permissions
+      if (mode === "edit" && project.hasRole("owner", "manager")) {
+        return true;
+      }
+      // Check for delete permissions
+      return mode === "delete" && project.hasRole("owner");
+
+    },
+
+    /**
+     * Deletes a project from Firestore and removes it from the project list.
+     *
+     * @param {Project} project - The project to be deleted.
+     */
+    async onDeleteProject(project) {
+      // Run the deletion task
+      await this.run(
+        this.$t,
+        async () => {
+          // Delete the firestore document
+          await project.delete();
+          // Find project index
+          const index = this.session.projectList.findIndex(prj => prj.id === project.id);
+          // Remove the project from the list
+          this.session.projectList.splice(index, 1);
+        }
+      )
+    }
+  },
 
   // Computed values fot his page.
   computed: {}

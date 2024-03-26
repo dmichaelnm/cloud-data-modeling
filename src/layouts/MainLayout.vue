@@ -289,13 +289,13 @@ export default {
       // Check, if editor is locked
       if (this.session.editorLock) {
         // Show warning dialog
-        this.showWarningDialog(
+        this.showConfirmationDialog(
           "discard",
           this.$t("dialog.discardEditor.title"),
           this.$t("dialog.discardEditor.message"),
+          "warning",
           undefined,
-          page,
-          [{value: "yes", label: "button.yes"}, {value: "no", label: "button.no"}]
+          page
         );
       } else {
         // Redirect to page

@@ -18,11 +18,7 @@ export class Project extends FirestoreDocument {
       createdBy: firebaseAuth.currentUser.displayName
     };
     // Append access rights
-    const access = [];
-    access.push(data.owner);
-    access.push(data.manager);
-    access.push(...data.members.map(mbr => mbr.accountId));
-    data.access = [...new Set(access)];
+    this.generateAccessList(data);
     // Create collection reference for the new project
     const coll = collection(firestore, "project");
     // Add document to firestore with the given data
@@ -59,6 +55,20 @@ export class Project extends FirestoreDocument {
     }
     // Return the array of loaded projects
     return projects;
+  }
+
+  /**
+   * Generates an access list based on provided data.
+   *
+   * @param {Object} data - The data used to generate the access list.
+   */
+  static generateAccessList(data) {
+    // Append access rights
+    const access = [];
+    access.push(data.owner);
+    access.push(data.manager);
+    access.push(...data.members.map(mbr => mbr.accountId));
+    data.access = [...new Set(access)];
   }
 
   /**
@@ -116,6 +126,9 @@ export class Project extends FirestoreDocument {
     if (this.data.owner === firebaseAuth.currentUser.uid) {
       // If I'm the owner my role is also owner
       this.role = "owner";
+    } else if (this.data.manager === firebaseAuth.currentUser.uid) {
+      // I'm the project manager
+      this.role = "manager";
     } else {
       // Find the member entry
       const member = this.data.members.find(
@@ -123,5 +136,23 @@ export class Project extends FirestoreDocument {
       // Apply role
       this.role = member.role;
     }
+  }
+
+  /**
+   * Checks if a user has one or more specified roles.
+   *
+   * @param {...string} roles - The roles to check against.
+   * @returns {boolean} - True if the user has at least one of the specified roles, false otherwise.
+   */
+  hasRole(...roles) {
+    return roles.find(role => role === this.role) !== undefined;
+  }
+
+  /**
+   * Updates the access list before the project is updated in firestore.
+   */
+  async beforeUpdate() {
+    // Generate access list
+    Project.generateAccessList(this.getData());
   }
 }

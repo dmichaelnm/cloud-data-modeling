@@ -1,5 +1,5 @@
 <!-- Project Editor Page -->
-<!--suppress JSUnresolvedReference -->
+<!--suppress JSUnresolvedReference, JSIncompatibleTypesComparison -->
 <template>
   <!-- Editor Component -->
   <c-editor ref="editor" scope="project" :handler-apply="onApply">
@@ -43,7 +43,9 @@
                 <!-- Project Manager Column -->
                 <div class="col">
                   <!-- Project Manager Input -->
-                  <c-account-field v-model="projectManager" :label="$t('common.projectManager')"
+                  <c-account-field v-model="projectManager"
+                                   :label="$t('common.projectManager')"
+                                   :disable="projectManagerReadOnly"
                                    @click="onShowChooseProjectManagerDialog"/>
                 </div>
               </div>
@@ -121,6 +123,7 @@ import MessageDialog from "src/dialogs/MessageDialog.vue";
 import CCustomAttributes from "components/app/CCustomAttributes.vue";
 import {getRoles} from "src/scripts/options";
 import {Project} from "src/scripts/objects/Project";
+import {Account} from "src/scripts/objects/Account";
 
 export default {
   // The name of this page
@@ -143,9 +146,27 @@ export default {
   },
 
   // Called before this page is mounted.
-  beforeMount() {
-    // Set own account as project manager per default.
-    this.projectManager = this.session.account;
+  async beforeMount() {
+    if (!this.session.editorItemId) {
+      // Create mode, set own account as project manager per default.
+      this.projectManager = this.session.account;
+    } else {
+      // Edit mode, get the project
+      this.currentProject = this.session.projectList.find(prj => prj.id === this.session.editorItemId);
+      // Apply general values
+      this.projectName = this.currentProject.data.name;
+      this.projectDescription = this.currentProject.data.description;
+      this.projectManager = await Account.getAccountById(this.currentProject.data.manager);
+      this.projectManagerReadOnly = !this.currentProject.hasRole("owner");
+      // Load team members
+      this.teamMembers = [];
+      for (let member of this.currentProject.data.members) {
+        const account = await Account.getAccountById(member.accountId);
+        this.teamMembers.push({account: account, role: member.role});
+      }
+      // Load custom attributes
+      this.customAttributes = this.currentProject.data.attributes;
+    }
   },
 
   // The variables of this page.
@@ -170,7 +191,9 @@ export default {
       // Custom Attributes
       customAttributes: [],
       // Current project
-      currentProject: undefined
+      currentProject: undefined,
+      // Flag controlling whether the project manager field is read only
+      projectManagerReadOnly: false
     }
   },
 
@@ -254,6 +277,25 @@ export default {
         // Form validation was successful, start persisting the project
         if (this.currentProject) {
           // Update current Project
+          await this.run(
+            this.$t,
+            async () => {
+              // Apply local values to the project
+              this.currentProject.data.name = this.projectName;
+              this.currentProject.data.description = this.projectDescription;
+              this.currentProject.data.manager = this.projectManager.id;
+              this.currentProject.data.members = this.teamMembers.map(mbr => {
+                return {accountId: mbr.account.id, role: mbr.role}
+              });
+              this.currentProject.data.attributes = this.customAttributes.map(att => {
+                return {name: att.name, type: att.type, value: att.value}
+              });
+              // Update the project in firestore
+              await this.currentProject.update(true);
+              // Close the editor
+              this.$refs.editor.close();
+            }
+          );
         } else {
           // Create new project
           await this.run(
@@ -271,7 +313,7 @@ export default {
                 attributes: this.customAttributes.map(att => {
                   return {name: att.name, type: att.type, value: att.value}
                 })
-              }
+              };
               // Add the project to firestore
               const project = await Project.create(data);
               await project.init();
@@ -280,7 +322,7 @@ export default {
               // Close the editor
               this.$refs.editor.close();
             }
-          );
+          )
         }
       } else {
         // Validation has failed, don't close the editor.

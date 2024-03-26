@@ -182,6 +182,8 @@ export default {
     developer: "Developer",
     // Deployer
     deployer: "Deployer",
+    // Manager
+    manager: "Project Manager",
     // Owner
     owner: "Owner"
   },
@@ -300,6 +302,14 @@ export default {
           "you still remain the owner of the project and can change the project manager at any time. Of course, you " +
           "can also take on the role of project manager yourself."
       },
+      // Edit Project Labels
+      edit: {
+        // Title
+        title: "Edit Project",
+        // Message
+        message: "Here you can edit the properties of the project, add new members to the project team, change " +
+          "member roles or remove members. If you are the owner of the project, you can also replace the project manager."
+      },
       // Tab Labels
       tab: {
         // Project Team
@@ -323,6 +333,13 @@ export default {
           alreadyProjectManager: "The selected account is already assigned as a project manager."
         }
       }
+    },
+    // Delete Labels
+    delete: {
+      // Title
+      title: "Delete Project?",
+      // Message
+      message: "Are you sure you really want to delete the project \"{name}\"? This action cannot be undone."
     }
   }
 }
