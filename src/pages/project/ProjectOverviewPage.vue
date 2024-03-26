@@ -83,6 +83,8 @@ export default {
           const index = this.session.projectList.findIndex(prj => prj.id === project.id);
           // Remove the project from the list
           this.session.projectList.splice(index, 1);
+          // Send event
+          this.$bus.emit("project-deleted", project);
         }
       )
     }

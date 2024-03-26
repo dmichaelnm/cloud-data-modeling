@@ -21,7 +21,12 @@ export const useSessionStore = defineStore('session', {
      * List of all projects of the current account
      * @type {Project[]}
      */
-    projectList: []
+    projectList: [],
+    /**
+     * The current active project
+     * @type {Project}
+     */
+    currentProject: undefined
   }),
   getters: {},
   actions: {

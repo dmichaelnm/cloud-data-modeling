@@ -4,7 +4,8 @@
             v-model="modelValue"
             dense
             options-dense
-            borderless
+            :outlined="!borderless"
+            :borderless="borderless"
             stack-label
             map-options
             emit-value
@@ -63,6 +64,11 @@ export default {
     iconSize: {
       type: String,
       default: "xs"
+    },
+    // Flag controlling whether this component is borderless.
+    borderless: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -76,7 +82,6 @@ export default {
   // The methods of this component.
   methods: {
     updateValue(val) {
-      console.debug(val);
       this.modelValue = val;
       this.$emit("update:modelValue", val);
     },

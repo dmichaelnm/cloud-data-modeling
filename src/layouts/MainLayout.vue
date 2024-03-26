@@ -23,6 +23,14 @@
         <q-btn round flat icon="menu" @click="leftDrawer = !leftDrawer"/>
         <!-- Application Title -->
         <q-toolbar-title>{{ $t("application.title") }}</q-toolbar-title>
+        <!-- Current Project Selector -->
+        <c-select v-if="this.session ? this.session.projectList.length > 0 : false"
+                  v-model="currentProjectId"
+                  :options="this.session ? this.session.projectList.map(prj => {return {value:prj.id, label: prj.data.name }}) : []"
+                  style="width: 250px"
+                  @update:model-value="switchProject">
+
+        </c-select>
         <!-- Space -->
         <q-space/>
         <!-- Account Menu Button -->
@@ -75,7 +83,7 @@
               @mouseover="leftDrawerMiniState = false"
               @mouseout="leftDrawerMiniState=true"
               mini-to-overlay
-              :width="200"
+              :width="250"
               :breakpoint="500"
               bordered>
       <!-- Scroll Area -->
@@ -175,6 +183,7 @@ import ChangePasswordDialog from "src/dialogs/ChangePasswordDialog.vue";
 import CDrawerItem from "components/common/CDrawerItem.vue";
 import CMenuItem from "components/common/CMenuItem.vue";
 import MessageDialog from "src/dialogs/MessageDialog.vue";
+import CSelect from "components/common/CSelect.vue";
 
 export default {
   // The name of this layout.
@@ -182,6 +191,7 @@ export default {
 
   // The components used by this layout.
   components: {
+    CSelect,
     MessageDialog,
     CMenuItem,
     ChangePasswordDialog,
@@ -195,6 +205,16 @@ export default {
 
   // Called before this layout is created.
   beforeCreate() {
+    // Handle event for deleted projects
+    this.$bus.on("project-deleted", async (project) => {
+      if (project.id === this.currentProjectId) {
+        // Current project was deleted
+        this.currentProjectId = this.session.projectList.length > 0 ? this.session.projectList[0].id : undefined;
+        // Switch to current project
+        await this.switchProject();
+      }
+    });
+
     // Catch changes for the current account.
     Account.onAccountStateChanged(async (account) => {
       // Lock the screen
@@ -214,6 +234,16 @@ export default {
         // Load projects and bind it to the session
         this.session.setProjects(await Project.loadProjects());
         console.debug(this.session.projectList);
+        // Set the current project
+        this.currentProjectId = account.data.states.project;
+        // Check if project Id is part of the project list
+        if (this.session.projectList.findIndex(prj => prj.id === this.currentProjectId) === -1) {
+          // No or invalid project ID set on account, use the first one in the list instead
+          this.currentProjectId = this.session.projectList.length > 0 ? this.session.projectList[0].id : undefined;
+          // Store it on the account
+          account.data.states.project = this.currentProjectId;
+          await account.update();
+        }
         // Route to project page
         this.$router.push({path: "/project"});
       }
@@ -234,7 +264,9 @@ export default {
       version: version,
       // Left Drawer
       leftDrawer: true,
-      leftDrawerMiniState: true
+      leftDrawerMiniState: true,
+      // Current Project ID
+      currentProjectId: undefined
     }
   },
 
@@ -300,6 +332,23 @@ export default {
       } else {
         // Redirect to page
         this.$router.push({path: "/" + page});
+      }
+    },
+
+    async switchProject() {
+      // Check, if current project has changed
+      if (this.session.currentProject !== this.currentProjectId) {
+        // Set current project ID
+        this.session.currentProject = this.currentProjectId;
+        // Start the change process
+        await this.run(
+          this.$t,
+          async () => {
+            // Store new project ID on the account
+            this.session.account.data.states.project = this.currentProjectId;
+            await this.session.account.update();
+          }
+        );
       }
     },
 
